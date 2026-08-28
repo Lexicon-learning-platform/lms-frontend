@@ -1,25 +1,25 @@
-import logo from "./assets/lexicon-logo.svg";
-
-
-
+import { Route, Routes } from "react-router-dom";
+import Header from "./components/Header.tsx";
+import Navbar from "./components/Navbar.tsx";
+import Home from "./pages/Home.tsx";
+import Modules from "./pages/Modules.tsx";
+import Schedule from "./pages/Schedule.tsx";
 
 function App() {
+    return (
+        <div className="flex min-h-screen flex-col">
+            <Header />
+            <Navbar />
 
-  return (
-    <>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/modules" element={<Modules />} />
+                <Route path="/schedule" element={<Schedule />} />
 
-        <img
-            src={logo}
-            alt="Lexicon LMS"
-            className="w-40"
-        />
 
-        <h1 className="text-4xl font-bold">
-            Hello World!
-        </h1>
-
-    </>
-  )
+            </Routes>
+        </div>
+    );
 }
 
-export default App
+export default App;
