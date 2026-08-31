@@ -2,9 +2,7 @@
 
   /*
   Example use:
-        await apiCall(onLogout,       //Method to call that logs out the user if token expired
-                      token,          //The auth token
-                      `/v1/movies/`,  //API url
+        await apiCall(`/v1/movies/`,  //API url
          { method: 'POST',            //The method to use
           body: JSON.stringify({      //Body data, if applicable
             title: title,
@@ -15,17 +13,12 @@
           });
   */
   
-  const apiCall = async <T,>(onLogout: () => void, token: string, endpoint: string, options: RequestInit = {}): Promise<T | null> => {
-    
+  const apiCall = async <T,>(endpoint: string, options: RequestInit = {}): Promise<T | null> => {
     
     const headers: HeadersInit = {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'credentials': 'include'
     };
-    
-    // Bifoga token om man är inloggad
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
     
     const response = await fetch(`${globalValues.URLstring}${endpoint}`, {
       ...options,
@@ -33,7 +26,12 @@
     });
 
     if (response.status === 401) {
-      if(token) onLogout(); 
+
+      throw new Error('(${response.status})');
+    }
+
+    if (response.status === 403) {
+
       throw new Error('(${response.status})');
     }
 
