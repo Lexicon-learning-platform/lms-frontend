@@ -25,12 +25,12 @@
       headers: { ...headers, ...options.headers }
     });
 
-    if (response.status === 401) {
+    if (response.status === 401) {      // Unauthorized
 
       throw new Error('(${response.status})');
     }
 
-    if (response.status === 403) {
+    if (response.status === 403) {    // Forbidden  
 
       throw new Error('(${response.status})');
     }
