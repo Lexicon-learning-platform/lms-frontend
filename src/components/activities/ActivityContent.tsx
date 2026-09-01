@@ -9,9 +9,7 @@ interface ActivityContentProps {
     activity: Activity;
 }
 
-export default function ActivityContent({
-                                            activity
-                                        }: ActivityContentProps) {
+export default function ActivityContent({activity}: ActivityContentProps) {
     switch (activity.activityType) {
         case "Lecture":
             return <LectureView activity={activity} />;
