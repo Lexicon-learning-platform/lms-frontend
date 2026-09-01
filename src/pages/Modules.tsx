@@ -1,32 +1,3 @@
-
-
-export interface Activity {
-    id: string;
-    activityType: ActivityType;
-    name: string | null;
-    description: string | null;
-    startTimeOffset: number;
-    durationMinutes: number;
-}
-
-export interface Module {
-    id: string;
-    name: string | null;
-    description: string | null;
-    durationDays: number | null;
-    activities: Activity[];
-}
-
-export type ActivityType =
-    | "Elearn"
-    | "Lecture"
-    | "Exercise"
-    | "Assignment"
-    | "Other";
-
-
-
-
 export default function Modules() {
     return (
         <main className="flex p-6">

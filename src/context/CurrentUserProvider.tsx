@@ -1,15 +1,11 @@
 import { useState, type ReactNode } from "react";
-import { currentUserContext} from "./currentUserContext.ts";
-import type {ApplicationUser} from "../models/applicationUser.ts";
+import { currentUserContext, type User } from "./currentUserContext.ts";
 
 export default function CurrentUserProvider({ children }: { children: ReactNode }) {
-    const [user] = useState<ApplicationUser | null>({
-        userId: "00000000-0000-0000-0000-000000000000",
-        givenName: "Gunnar",
-        lastName: "Test",
-        courseId: 1,
+    const [user] = useState<User | null>({
+        name: "Gunnar",
+        role: "student",
     });
-
 
     return (
         <currentUserContext.Provider value={user}>
