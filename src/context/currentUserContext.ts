@@ -1,9 +1,5 @@
 import { createContext } from "react";
+import type { ApplicationUser } from "../models/applicationUser";
 
-export type User = {
-    name: string;
-    role: "student" | "teacher";
-};
-
-export const currentUserContext = createContext<User | null>(null);
+export const currentUserContext = createContext<ApplicationUser | null>(null);
 
