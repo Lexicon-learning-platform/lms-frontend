@@ -1,22 +1,15 @@
-import {useState} from "react";
-import {modules} from "../mock/modules";
-import {activityTypes} from "../models/activity.ts";
+import { useState } from "react";
+import { modules } from "../mock/modules";
+import ModuleNavigation from "../components/ModuleNavigation.tsx";
 
 export default function Modules() {
+    const [selectedModuleId, setSelectedModuleId] = useState(
+        modules[0]?.id ?? ""
+    );
 
-    const [selectedModuleId, setSelectedModuleId] = useState(modules[0]?.id ?? "");
-    const selectedModule = modules.find(module => module.id === selectedModuleId);
-    const [expandedModuleIds, setExpandedModuleIds] = useState<string[]>([]);
-
-
-    function toggleModule(moduleId: string) {
-        setExpandedModuleIds(current =>
-            current.includes(moduleId)
-                ? current.filter(id => id !== moduleId)
-                : [...current, moduleId]
-        );
-    }
-
+    const selectedModule = modules.find(
+        module => module.id === selectedModuleId
+    );
 
     return (
         <main className="flex min-h-[calc(100vh-120px)] p-6">
@@ -42,66 +35,10 @@ export default function Modules() {
                 </div>
             </div>
 
-            <aside className="w-64 border-l p-4">
-
-
-                <nav className="mt-4">
-                    <ul className="space-y-4">
-                        {modules.map(module => {
-                            const isSelectedModule =
-                                module.id === selectedModuleId;
-
-                            return (
-                                <li key={module.id}>
-
-                                    <div className="flex items-center gap-1">
-                                        <button
-                                            type="button"
-                                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded hover:bg-gray-100"
-                                            onClick={() => toggleModule(module.id)}
-                                        >
-                                            {expandedModuleIds.includes(module.id) ? "▾" : "▸"}
-
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setSelectedModuleId(module.id);
-                                            }}
-                                            className={`w-full rounded px-2 py-1 text-left font-semibold ${
-                                                isSelectedModule
-                                                    ? "bg-gray-200"
-                                                    : "hover:bg-gray-100"
-                                            }`}
-                                        >
-                                            {module.name}
-                                        </button>
-                                    </div>
-
-                                    {expandedModuleIds.includes(module.id) && (
-                                        <ul className="mt-2 space-y-1 pl-4">
-                                            {activityTypes.map(type => (
-                                                <li key={type}>
-                                                    <button
-                                                        type="button"
-                                                        className="flex w-full items-center gap-1 rounded px-2 py-1 text-left hover:bg-gray-100"
-                                                    >
-                                                        <span className="flex h-8 w-6 items-center justify-center">
-                                                            ▸
-                                                        </span>
-                                                        <span>{type}</span>
-                                                    </button>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </nav>
-            </aside>
+            <ModuleNavigation
+                selectedModuleId={selectedModuleId}
+                onSelectModule={setSelectedModuleId}
+            />
         </main>
     );
 }
