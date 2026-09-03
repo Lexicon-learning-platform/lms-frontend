@@ -1,16 +1,10 @@
 import {useState} from "react";
 import {modules} from "../mock/modules";
-import ActivityContent from "../components/activities/ActivityContent.tsx";
 
 export default function Modules() {
 
     const [selectedModuleId, setSelectedModuleId] = useState(modules[0]?.id ?? "");
-    const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
-
-
     const selectedModule = modules.find(module => module.id === selectedModuleId);
-    const selectedActivity = selectedModule?.activities.find(activity => activity.id === selectedActivityId);
-
     const [expandedModuleIds, setExpandedModuleIds] = useState<string[]>([]);
 
 
@@ -31,9 +25,7 @@ export default function Modules() {
                 </h1>
 
                 <div className="mt-6">
-                    {selectedActivity ? (
-                        <ActivityContent activity={selectedActivity}/>
-                    ) : selectedModule ? (
+                    {selectedModule ? (
                         <>
                             <h2 className="text-lg font-semibold">
                                 {selectedModule.name}
@@ -43,7 +35,9 @@ export default function Modules() {
                                 {selectedModule.description}
                             </p>
                         </>
-                    ) : null}
+                    ) : (
+                        <p>Välj en modul</p>
+                    )}
                 </div>
             </div>
 
@@ -73,7 +67,6 @@ export default function Modules() {
                                             type="button"
                                             onClick={() => {
                                                 setSelectedModuleId(module.id);
-                                                setSelectedActivityId(null);
                                             }}
                                             className={`w-full rounded px-2 py-1 text-left font-semibold ${
                                                 isSelectedModule
@@ -87,33 +80,8 @@ export default function Modules() {
 
                                     {expandedModuleIds.includes(module.id) && (
 
-
                                         <ul className="mt-2 space-y-1 pl-4">
-                                            {module.activities.map(activity => {
-                                                const isSelectedActivity = activity.id === selectedActivityId;
 
-
-                                                return (
-                                                    <li key={activity.id}>
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                setSelectedModuleId(module.id);
-                                                                setSelectedActivityId(activity.id);
-                                                            }}
-                                                            className={`w-full rounded px-2 py-1 text-left text-sm ${
-                                                                isSelectedActivity
-                                                                    ? "bg-gray-200 font-semibold"
-                                                                    : "hover:bg-gray-100"
-                                                            }`}
-                                                        >
-                                                            {activity.name}
-                                                        </button>
-                                                    </li>
-                                                )
-
-
-                                            })}
                                         </ul>
                                     )}
                                 </li>
