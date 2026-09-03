@@ -1,13 +1,27 @@
-import { useState } from "react";
-import { modules } from "../mock/modules";
+import {useState} from "react";
+import {modules} from "../mock/modules";
 import ActivityContent from "../components/activities/ActivityContent.tsx";
 
 export default function Modules() {
 
     const [selectedModuleId, setSelectedModuleId] = useState(modules[0]?.id ?? "");
     const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
+
+
     const selectedModule = modules.find(module => module.id === selectedModuleId);
     const selectedActivity = selectedModule?.activities.find(activity => activity.id === selectedActivityId);
+
+    const [expandedModuleIds, setExpandedModuleIds] = useState<string[]>([]);
+
+
+    function toggleModule(moduleId: string) {
+        setExpandedModuleIds(current =>
+            current.includes(moduleId)
+                ? current.filter(id => id !== moduleId)
+                : [...current, moduleId]
+        );
+    }
+
 
     return (
         <main className="flex min-h-[calc(100vh-120px)] p-6">
@@ -18,7 +32,7 @@ export default function Modules() {
 
                 <div className="mt-6">
                     {selectedActivity ? (
-                        <ActivityContent activity={selectedActivity} />
+                        <ActivityContent activity={selectedActivity}/>
                     ) : selectedModule ? (
                         <>
                             <h2 className="text-lg font-semibold">
@@ -44,46 +58,64 @@ export default function Modules() {
 
                             return (
                                 <li key={module.id}>
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setSelectedModuleId(module.id);
-                                            setSelectedActivityId(null);
-                                        }}
-                                        className={`w-full rounded px-2 py-1 text-left font-semibold ${
-                                            isSelectedModule
-                                                ? "bg-gray-200"
-                                                : "hover:bg-gray-100"
-                                        }`}
-                                    >
-                                        {module.name}
-                                    </button>
 
-                                    <ul className="mt-2 space-y-1 pl-4">
-                                        {module.activities.map(activity => {
-                                            const isSelectedActivity =
-                                                activity.id === selectedActivityId;
+                                    <div className="flex items-center gap-1">
+                                        <button
+                                            type="button"
+                                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded hover:bg-gray-100"
+                                            onClick={() => toggleModule(module.id)}
+                                        >
+                                            {expandedModuleIds.includes(module.id) ? "▾" : "▸"}
 
-                                            return (
-                                                <li key={activity.id}>
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => {
-                                                            setSelectedModuleId(module.id);
-                                                            setSelectedActivityId(activity.id);
-                                                        }}
-                                                        className={`w-full rounded px-2 py-1 text-left text-sm ${
-                                                            isSelectedActivity
-                                                                ? "bg-gray-200 font-semibold"
-                                                                : "hover:bg-gray-100"
-                                                        }`}
-                                                    >
-                                                        {activity.name}
-                                                    </button>
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setSelectedModuleId(module.id);
+                                                setSelectedActivityId(null);
+                                            }}
+                                            className={`w-full rounded px-2 py-1 text-left font-semibold ${
+                                                isSelectedModule
+                                                    ? "bg-gray-200"
+                                                    : "hover:bg-gray-100"
+                                            }`}
+                                        >
+                                            {module.name}
+                                        </button>
+                                    </div>
+
+                                    {expandedModuleIds.includes(module.id) && (
+
+
+                                        <ul className="mt-2 space-y-1 pl-4">
+                                            {module.activities.map(activity => {
+                                                const isSelectedActivity = activity.id === selectedActivityId;
+
+
+                                                return (
+                                                    <li key={activity.id}>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                setSelectedModuleId(module.id);
+                                                                setSelectedActivityId(activity.id);
+                                                            }}
+                                                            className={`w-full rounded px-2 py-1 text-left text-sm ${
+                                                                isSelectedActivity
+                                                                    ? "bg-gray-200 font-semibold"
+                                                                    : "hover:bg-gray-100"
+                                                            }`}
+                                                        >
+                                                            {activity.name}
+                                                        </button>
+                                                    </li>
+                                                )
+
+
+                                            })}
+                                        </ul>
+                                    )}
                                 </li>
                             );
                         })}
