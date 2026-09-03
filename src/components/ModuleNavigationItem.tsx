@@ -6,8 +6,10 @@ interface ModuleNavigationItemProps {
     module: Module;
     isSelected: boolean;
     isExpanded: boolean;
+    selectedActivityId: string | null;
     onToggle: () => void;
     onSelect: () => void;
+    onSelectActivity: (activityId: string) => void;
 }
 
 export default function ModuleNavigationItem(
@@ -62,7 +64,12 @@ export default function ModuleNavigationItem(
                                 <li key={activity.id}>
                                     <button
                                         type="button"
-                                        className="w-full rounded px-3 py-2 text-left hover:bg-gray-100"
+                                        className={`w-full rounded px-3 py-2 text-left ${
+                                            activity.id === props.selectedActivityId
+                                                ? "bg-gray-200"
+                                                : "hover:bg-gray-100"
+                                        }`}
+                                        onClick={() => props.onSelectActivity(activity.id)}
                                     >
                                         {activity.name}
                                     </button>
