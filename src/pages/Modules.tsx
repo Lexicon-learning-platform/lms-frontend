@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {modules} from "../mock/modules";
+import {activityTypes} from "../models/activity.ts";
 
 export default function Modules() {
 
@@ -79,9 +80,20 @@ export default function Modules() {
                                     </div>
 
                                     {expandedModuleIds.includes(module.id) && (
-
                                         <ul className="mt-2 space-y-1 pl-4">
-
+                                            {activityTypes.map(type => (
+                                                <li key={type}>
+                                                    <button
+                                                        type="button"
+                                                        className="flex w-full items-center gap-1 rounded px-2 py-1 text-left hover:bg-gray-100"
+                                                    >
+                                                        <span className="flex h-8 w-6 items-center justify-center">
+                                                            ▸
+                                                        </span>
+                                                        <span>{type}</span>
+                                                    </button>
+                                                </li>
+                                            ))}
                                         </ul>
                                     )}
                                 </li>

@@ -15,3 +15,12 @@ export type ActivityType =
     | "Exercise"
     | "Assignment"
     | "Other";
+
+
+export const activityTypes: ActivityType[] = [
+    "Elearn",
+    "Lecture",
+    "Exercise",
+    "Assignment",
+    "Other"
+];
