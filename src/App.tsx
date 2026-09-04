@@ -11,13 +11,13 @@ function App() {
         <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col items-center">
             <Header />
             <Navbar />
-
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/modules" element={<Modules />} />
-                <Route path="/schedule" element={<Schedule />} />
-            </Routes>
-
+            <main className="w-full max-w-[1440px] flex-1 px-12 py-8">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/modules" element={<Modules />} />
+                    <Route path="/schedule" element={<Schedule />} />
+                </Routes>
+            </main>
             <Footer />
         </div>
     );

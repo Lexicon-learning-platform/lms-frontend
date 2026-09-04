@@ -1,11 +1,11 @@
 export default function Home() {
     return (
-        <main className="p-6">
+        <>
             <h1 className="text-xl font-bold">
                 Webbutveckling
             </h1>
 
-            <section className="mt-6">
+            <section className="col-span-12 space-y-6">
                 <div className="border p-4">
                     <p className="font-semibold">
                         ⚠️ Ej inlämnad uppgift
@@ -17,7 +17,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="mt-8">
+            <section className="col-span-12 space-y-6">
                 <h2 className="mb-2 text-lg font-semibold">
                     Pågående modul
                 </h2>
@@ -31,7 +31,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="mt-8">
+            <section className="col-span-12 space-y-6">
                 <h2 className="mb-2 text-lg font-semibold">
                     Nästa aktivitet
                 </h2>
@@ -44,6 +44,6 @@ export default function Home() {
                     <p>Idag 10:00</p>
                 </div>
             </section>
-        </main>
+        </>
     );
 }
