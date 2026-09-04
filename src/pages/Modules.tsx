@@ -1,13 +1,26 @@
 import { useState } from "react";
 import { modules } from "../mock/modules";
-import ActivityContent from "../components/activities/ActivityContent.tsx";
+import ModuleNavigation from "../components/ModuleNavigation.tsx";
 
 export default function Modules() {
 
-    const [selectedModuleId, setSelectedModuleId] = useState(modules[0]?.id ?? "");
+    const [selectedModuleId, setSelectedModuleId] = useState<string | null> (modules[0]?.id ?? "");
     const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
+
     const selectedModule = modules.find(module => module.id === selectedModuleId);
-    const selectedActivity = selectedModule?.activities.find(activity => activity.id === selectedActivityId);
+    const selectedActivity = modules
+        .flatMap(module => module.activities)
+        .find(activity => activity.id === selectedActivityId);
+
+    function selectModule(moduleId: string) {
+        setSelectedModuleId(moduleId);
+        setSelectedActivityId(null);
+    }
+
+    function selectActivity(activityId: string) {
+        setSelectedModuleId(null);
+        setSelectedActivityId(activityId);
+    }
 
     return (
         <main className="flex min-h-[calc(100vh-120px)] p-6">
@@ -17,9 +30,7 @@ export default function Modules() {
                 </h1>
 
                 <div className="mt-6">
-                    {selectedActivity ? (
-                        <ActivityContent activity={selectedActivity} />
-                    ) : selectedModule ? (
+                    {selectedModule && (
                         <>
                             <h2 className="text-lg font-semibold">
                                 {selectedModule.name}
@@ -29,67 +40,32 @@ export default function Modules() {
                                 {selectedModule.description}
                             </p>
                         </>
-                    ) : null}
+                    )}
+
+                    {selectedActivity && (
+                        <>
+                            <h2 className="text-lg font-semibold">
+                                {selectedActivity.name}
+                            </h2>
+
+                            <p className="mt-2">
+                                {selectedActivity.description}
+                            </p>
+                        </>
+                    )}
+
+                    {!selectedModule && !selectedActivity && (
+                        <p>Välj en modul eller aktivitet</p>
+                    )}
                 </div>
             </div>
 
-            <aside className="w-64 border-l p-4">
-
-
-                <nav className="mt-4">
-                    <ul className="space-y-4">
-                        {modules.map(module => {
-                            const isSelectedModule =
-                                module.id === selectedModuleId;
-
-                            return (
-                                <li key={module.id}>
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setSelectedModuleId(module.id);
-                                            setSelectedActivityId(null);
-                                        }}
-                                        className={`w-full rounded px-2 py-1 text-left font-semibold ${
-                                            isSelectedModule
-                                                ? "bg-gray-200"
-                                                : "hover:bg-gray-100"
-                                        }`}
-                                    >
-                                        {module.name}
-                                    </button>
-
-                                    <ul className="mt-2 space-y-1 pl-4">
-                                        {module.activities.map(activity => {
-                                            const isSelectedActivity =
-                                                activity.id === selectedActivityId;
-
-                                            return (
-                                                <li key={activity.id}>
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => {
-                                                            setSelectedModuleId(module.id);
-                                                            setSelectedActivityId(activity.id);
-                                                        }}
-                                                        className={`w-full rounded px-2 py-1 text-left text-sm ${
-                                                            isSelectedActivity
-                                                                ? "bg-gray-200 font-semibold"
-                                                                : "hover:bg-gray-100"
-                                                        }`}
-                                                    >
-                                                        {activity.name}
-                                                    </button>
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </nav>
-            </aside>
+            <ModuleNavigation
+                selectedModuleId={selectedModuleId}
+                selectedActivityId={selectedActivityId}
+                onSelectModule={selectModule}
+                onSelectActivity={selectActivity}
+            />
         </main>
     );
 }
