@@ -3,14 +3,20 @@ import logo from "../assets/lexicon-logo.svg";
 
 export default function Header() {
     return (
-        <header className="flex items-center justify-between border-b">
-            <img
-                src={logo}
-                alt="Lexicon"
-                className="w-32"
-            />
+        <header className="w-full h-[72px] bg-white border-b border-slate-200 px-12 flex items-center justify-between">
+            <div className="w-full max-w-[1440px] px-12 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <img
+                        src={logo}
+                        alt="Lexicon"
+                        className="w-32"
+                    />
+                </div>
 
-            <UserMenu>Elevnamn...</UserMenu>
+                <div className="flex items-center gap-3">
+                    <UserMenu>Elevnamn...</UserMenu>
+                </div>
+            </div>
         </header>
     );
 }

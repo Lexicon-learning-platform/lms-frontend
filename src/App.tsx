@@ -4,10 +4,11 @@ import Navbar from "./components/Navbar.tsx";
 import Home from "./pages/Home.tsx";
 import Modules from "./pages/Modules.tsx";
 import Schedule from "./pages/Schedule.tsx";
+import Footer from "./components/Footer.tsx";
 
 function App() {
     return (
-        <div className="flex min-h-screen flex-col">
+        <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col items-center">
             <Header />
             <Navbar />
 
@@ -15,9 +16,9 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/modules" element={<Modules />} />
                 <Route path="/schedule" element={<Schedule />} />
-
-
             </Routes>
+
+            <Footer />
         </div>
     );
 }
