@@ -22,7 +22,7 @@ export default function Header() {
 
                 <div className="flex items-center gap-3">
                     {user ? (
-                        <UserMenu>Elevnamn...</UserMenu>
+                        <UserMenu>{user.name}</UserMenu>
                     ) : (
                         <Link
                             to="/login"
