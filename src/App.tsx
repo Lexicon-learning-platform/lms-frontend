@@ -19,7 +19,7 @@ function App() {
         <div className="h-screen bg-slate-50 text-slate-800 flex flex-col items-center">
             <Header />
 
-            {user ? (
+            {user ? ( // todo change to auth later when fully implemented
                 <>
                     <Navbar />
 
