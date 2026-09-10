@@ -1,6 +1,6 @@
 
 const globalValues = {
-    URLstring: "https://localhost:7027/api"
+    URLstring: "https://localhost:7217/api"
     
 }
 
