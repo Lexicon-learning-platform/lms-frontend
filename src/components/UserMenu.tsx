@@ -39,7 +39,7 @@ export default function UserMenu({ children }: Props) {
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-32 border bg-white p-2">
+                <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg border border-slate-200 py-1.5 z-50 text-sm">
                     <a href="#" className="block px-4 py-2 text-slate-700 hover:bg-slate-50">
                         Profil
                     </a>
@@ -48,9 +48,9 @@ export default function UserMenu({ children }: Props) {
                     </a>
                     <hr className="my-1 border-slate-100" />
                     <button
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50"
                         type="button"
                         onClick={handleLogout}
-                        className="w-full text-left p-2 hover:bg-gray-100"
                     >
                         Logga ut
                     </button>

@@ -18,11 +18,11 @@ function App() {
     return (
         <div className="h-screen bg-slate-50 text-slate-800 flex flex-col items-center">
             <Header />
-
+            <Navbar />
+            
             <main className="w-full max-w-[1440px] flex-1 px-4 md:px-12 py-6 md:py-8">
                 {user ? ( // todo change to auth later when fully implemented
                     <>
-                        <Navbar />
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/modules" element={<Modules />} />
