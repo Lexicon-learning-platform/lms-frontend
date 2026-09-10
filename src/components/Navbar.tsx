@@ -18,6 +18,7 @@ export default function Navbar() {
 
                     <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-slate-600 hover:text-slate-900 text-base">
                         {mobileMenuOpen ? 'x' : 'o'}
+                        {/* TODO: Find a proper burger icon */}
                     </button>
 
                     {/* <span className="h-5 w-px bg-slate-300" aria-hidden="true" /> */}
