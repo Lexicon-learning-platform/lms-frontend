@@ -23,8 +23,17 @@ export default function Modules() {
     }
 
     return (
-        <div className="flex h-full">
-            <div className="flex-1 px-24">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 flex-1">
+            <aside className="md:order-2 md:col-span-3 h-full w-64 border-l p-4">
+                <ModuleNavigation
+                    selectedModuleId={selectedModuleId}
+                    selectedActivityId={selectedActivityId}
+                    onSelectModule={selectModule}
+                    onSelectActivity={selectActivity}
+                />
+            </aside>
+
+            <section className="md:order-1 md:col-span-9 space-y-6 h-full">
                 <h1 className="text-xl font-bold">
                     Moduler
                 </h1>
@@ -58,14 +67,7 @@ export default function Modules() {
                         <p>Välj en modul eller aktivitet</p>
                     )}
                 </div>
-            </div>
-
-            <ModuleNavigation
-                selectedModuleId={selectedModuleId}
-                selectedActivityId={selectedActivityId}
-                onSelectModule={selectModule}
-                onSelectActivity={selectActivity}
-            />
+            </section>
         </div>
     );
 }

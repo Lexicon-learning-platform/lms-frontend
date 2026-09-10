@@ -16,30 +16,28 @@ function App() {
     const { user } = useContext(currentUserContext)!;
 
     return (
-        <div className="h-screen bg-slate-50 text-slate-800 flex flex-col items-center">
+        <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col items-center">
             <Header />
-
-            {user ? ( // todo change to auth later when fully implemented
-                <>
-                    <Navbar />
-
-                    <main className="w-full flex-1 py-8">
+            <Navbar />
+            
+            <main className="w-full max-w-[1440px] flex-1 px-4 md:px-12 py-6 md:py-8 flex flex-col">
+                {user ? ( // todo change to auth later when fully implemented
+                    <>
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/modules" element={<Modules />} />
                             <Route path="/schedule" element={<Schedule />} />
                             <Route path="/submissions" element={<Submissions />} />
-
                         </Routes>
-                    </main>
-                </>
-            ) : (
-                <Routes>
-                    <Route path="/" element={<PublicHome />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                </Routes>
-            )}
+                    </>
+                ) : (
+                    <Routes>
+                        <Route path="/" element={<PublicHome />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                    </Routes>
+                )}
+            </main>
 
             <Footer />
         </div>

@@ -51,7 +51,7 @@ export default function ModuleNavigationItem(
                         className="flex w-full items-center gap-1 rounded px-2 py-1.5 text-left font-medium hover:bg-gray-100"
                         onClick={() => toggleActivityType(type)}
                     >
-                    <span className="flex h-8 w-6 items-center justify-center">
+                    <span className="flex h-8 w-6 text-lg items-center justify-center">
                         {isCategoryExpanded ? "▾" : "▸"}
                     </span>
 
@@ -87,7 +87,7 @@ export default function ModuleNavigationItem(
             <div className="flex items-center gap-1">
                 <button
                     type="button"
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded hover:bg-gray-100"
+                    className="flex h-8 w-8 text-lg shrink-0 items-center justify-center rounded hover:bg-gray-100"
                     onClick={props.onToggle}
                 >
                     {props.isExpanded ? "▾" : "▸"}
