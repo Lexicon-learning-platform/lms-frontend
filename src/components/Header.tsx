@@ -14,7 +14,7 @@ export default function Header() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                    <UserMenu>Elevnamn...</UserMenu>
+                    <UserMenu userName="Anna Andersson" />
                 </div>
             </div>
         </header>

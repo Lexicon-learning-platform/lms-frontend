@@ -61,11 +61,11 @@ export default function Modules() {
             </section>
             <aside className="col-span-3">
                 <ModuleNavigation
-                selectedModuleId={selectedModuleId}
-                selectedActivityId={selectedActivityId}
-                onSelectModule={selectModule}
-                onSelectActivity={selectActivity}
-            />
+                    selectedModuleId={selectedModuleId}
+                    selectedActivityId={selectedActivityId}
+                    onSelectModule={selectModule}
+                    onSelectActivity={selectActivity}
+                />
             </aside>
         </div>
     );
