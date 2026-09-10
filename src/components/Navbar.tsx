@@ -3,20 +3,23 @@ import {currentUserContext} from "../context/currentUserContext.ts";
 import {useContext} from "react";
 
 export default function Navbar() {
-    const user = useContext(currentUserContext);
+    const { user } = useContext(currentUserContext)!;
+
     return (
-        <nav className="w-full h-[48px] bg-white border-b border-slate-200 px-12 flex items-center justify-between text-xs font-medium text-slate-500">
-            <div className="w-full max-w-[1440px] px-12 flex items-center justify-between">
+        <nav className="w-full h-[48px] bg-white border-b border-slate-200 px-12 flex items-center text-xs font-medium text-slate-500">
+            <div className="w-full max-w-[1440px] px-12 flex items-center">
                 <div className="flex items-center gap-6">
                     {user?.role === "teacher" ? (
-                    <button>
-                        Webbutveckling ▾
-                    </button>
+                        <button>
+                            Webbutveckling ▾
+                        </button>
                     ) : (
                         <span>
                             Webbutveckling
                         </span>
                     )}
+
+                    <span className="h-5 w-px bg-slate-300" aria-hidden="true" />
 
                     <NavLink to="/">Hem</NavLink>
                     <NavLink to="/modules">Moduler</NavLink>
