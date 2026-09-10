@@ -21,7 +21,7 @@ export default function ModuleNavigation(props: ModuleNavigationProps) {
     }
 
     return (
-        <aside className="w-64 border-l p-4 border-r">
+        <>
             <nav className="mt-4">
                 <ul className="space-y-4">
                     {modules.map(module => (
@@ -38,6 +38,6 @@ export default function ModuleNavigation(props: ModuleNavigationProps) {
                     ))}
                 </ul>
             </nav>
-        </aside>
+        </>
     );
 }
