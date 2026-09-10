@@ -23,8 +23,17 @@ export default function Modules() {
     }
 
     return (
-        <div className="grid grid-cols-12 gap-6 min-h-[calc(100vh-120px)]">
-            <section className="col-span-9 space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[calc(100vh-120px)]">
+            <aside className="md:order-2 md:col-span-3">
+                <ModuleNavigation
+                    selectedModuleId={selectedModuleId}
+                    selectedActivityId={selectedActivityId}
+                    onSelectModule={selectModule}
+                    onSelectActivity={selectActivity}
+                />
+            </aside>
+
+            <section className="md:order-1 md:col-span-9 space-y-6">
                 <h1 className="text-xl font-bold">
                     Moduler
                 </h1>
@@ -59,14 +68,6 @@ export default function Modules() {
                     )}
                 </div>
             </section>
-            <aside className="col-span-3">
-                <ModuleNavigation
-                    selectedModuleId={selectedModuleId}
-                    selectedActivityId={selectedActivityId}
-                    onSelectModule={selectModule}
-                    onSelectActivity={selectActivity}
-                />
-            </aside>
         </div>
     );
 }
