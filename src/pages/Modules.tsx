@@ -23,7 +23,7 @@ export default function Modules() {
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[calc(100vh-120px)]">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 flex-1">
             <aside className="md:order-2 md:col-span-3 h-full w-64 border-l p-4">
                 <ModuleNavigation
                     selectedModuleId={selectedModuleId}
