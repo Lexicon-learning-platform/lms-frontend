@@ -3,7 +3,7 @@ import { currentUserContext } from "../context/currentUserContext.ts";
 import { useContext, useState } from "react";
 
 export default function Navbar() {
-    const user = useContext(currentUserContext);
+    const { user } = useContext(currentUserContext)!;
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
@@ -19,8 +19,10 @@ export default function Navbar() {
                     <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-slate-600 hover:text-slate-900 text-base">
                         {mobileMenuOpen ? 'x' : 'o'}
                     </button>
-                </div>
 
+                    <span className="h-5 w-px bg-slate-300" aria-hidden="true" />
+                </div>
+                
                 <div className={`${mobileMenuOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row gap-4 md:gap-6 pb-4 md:pb-0 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100 bg-white w-full md:w-auto`}>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/">Hem</NavLink>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/modules">Moduler</NavLink>

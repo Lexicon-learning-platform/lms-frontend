@@ -24,7 +24,7 @@ export default function Modules() {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[calc(100vh-120px)]">
-            <aside className="md:order-2 md:col-span-3">
+            <aside className="md:order-2 md:col-span-3 h-full">
                 <ModuleNavigation
                     selectedModuleId={selectedModuleId}
                     selectedActivityId={selectedActivityId}
@@ -33,7 +33,7 @@ export default function Modules() {
                 />
             </aside>
 
-            <section className="md:order-1 md:col-span-9 space-y-6">
+            <section className="md:order-1 md:col-span-9 space-y-6 h-full">
                 <h1 className="text-xl font-bold">
                     Moduler
                 </h1>

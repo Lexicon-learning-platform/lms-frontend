@@ -5,22 +5,42 @@ import Home from "./pages/Home.tsx";
 import Modules from "./pages/Modules.tsx";
 import Schedule from "./pages/Schedule.tsx";
 import Footer from "./components/Footer.tsx";
+import {useContext} from "react";
+import {currentUserContext} from "./context/currentUserContext.ts";
+import PublicHome from "./pages/PublicHome.tsx";
+import Login from "./pages/Login.tsx";
+import Register from "./pages/Register.tsx";
+import Submissions from "./pages/Submissions.tsx";
 
 function App() {
+    const { user } = useContext(currentUserContext)!;
+
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col items-center">
+        <div className="h-screen bg-slate-50 text-slate-800 flex flex-col items-center">
             <Header />
-            <Navbar />
+
             <main className="w-full max-w-[1440px] flex-1 px-4 md:px-12 py-6 md:py-8">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/modules" element={<Modules />} />
-                    <Route path="/schedule" element={<Schedule />} />
-                </Routes>
+                {user ? ( // todo change to auth later when fully implemented
+                    <>
+                        <Navbar />
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/modules" element={<Modules />} />
+                            <Route path="/schedule" element={<Schedule />} />
+                            <Route path="/submissions" element={<Submissions />} />
+                        </Routes>
+                    </>
+                ) : (
+                    <Routes>
+                        <Route path="/" element={<PublicHome />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                    </Routes>
+                )}
             </main>
+
             <Footer />
         </div>
     );
 }
-
 export default App;
