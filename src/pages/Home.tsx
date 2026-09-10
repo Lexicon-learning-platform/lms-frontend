@@ -1,6 +1,6 @@
 export default function Home() {
     return (
-        <>
+        <div className="px-24">
             <h1 className="text-xl font-bold">
                 Webbutveckling
             </h1>
@@ -44,6 +44,6 @@ export default function Home() {
                     <p>Idag 10:00</p>
                 </div>
             </section>
-        </>
+        </div>
     );
 }
