@@ -1,6 +1,8 @@
 export interface ApplicationUser {
-    userId: string;
+    id: string;
+    userName: string;
     givenName: string | null;
     lastName: string | null;
-    courseId: number | null;
+    courseId: string | null;
+    role: string;
 }
