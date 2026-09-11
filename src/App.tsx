@@ -19,9 +19,10 @@ function App() {
         <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col items-center">
             <Header />
             <Navbar />
-            
-            <main className="w-full flex-1 px-4 md:px-12 py-6 md:py-8 flex flex-col">
-                {user ? ( // todo change to auth later when fully implemented
+
+            <main className="w-full max-w-[1680px] mx-auto flex-1 px-4 md:px-12 py-6 md:py-8 flex flex-col">
+
+            {user ? ( // todo change to auth later when fully implemented
                     <>
                         <Routes>
                             <Route path="/" element={<Home />} />
