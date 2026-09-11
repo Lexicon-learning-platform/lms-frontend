@@ -3,7 +3,7 @@ import type { AuthResponse } from "../models/AuthResponse.ts";
 
 type SetAccessToken = (token: string | null) => void;
 
-export async function authenticatedApiCall<T>(endpoint: string, accessToken: string | null, setAccessToken: SetAccessToken, options: RequestInit = {}): Promise<T | null> {
+export async function authApiCall<T>(endpoint: string, accessToken: string | null, setAccessToken: SetAccessToken, options: RequestInit = {}): Promise<T | null> {
 
     try {
         return await apiCall<T>(endpoint, addAuthorizationHeader(options, accessToken));

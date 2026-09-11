@@ -5,6 +5,7 @@ import type { AuthResponse } from "../models/AuthResponse.ts";
 import type { ApplicationUser } from "../models/applicationUser.ts";
 import { useAuth } from "../context/AuthContext.tsx";
 import { useCurrentUser } from "../context/currentUserContext.ts";
+import {authApiCall} from "../functions/authApiCall.ts";
 
 
 export default function Login() {
@@ -35,17 +36,18 @@ export default function Login() {
 
             setAccessToken(token);
 
-            const userResponse = await apiCall<ApplicationUser>("/auth/getuser", {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            const userResponse = await authApiCall<ApplicationUser>(
+                "/auth/getuser",
+                token,
+                setAccessToken
+            );
 
             if (!userResponse) {
                 throw new Error("Could not get user");
             }
 
             setUser(userResponse);
+            //todo fetch and set course
 
             setUserName("");
             setPassword("");
