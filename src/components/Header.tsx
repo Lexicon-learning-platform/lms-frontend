@@ -10,7 +10,7 @@ export default function Header() {
 
     return (
         <header className="w-full h-[72px] bg-white border-b border-slate-200 flex justify-center">
-            <div className="w-full max-w-[1440px] px-4 md:px-12 flex items-center justify-between">
+            <div className="w-full px-4 md:px-12 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <Link to="/">
                         <img
