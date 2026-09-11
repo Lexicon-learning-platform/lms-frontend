@@ -20,7 +20,7 @@ function App() {
             <Header />
             <Navbar />
             
-            <main className="w-full max-w-[1440px] flex-1 px-4 md:px-12 py-6 md:py-8 flex flex-col">
+            <main className="w-full flex-1 px-4 md:px-12 py-6 md:py-8 flex flex-col">
                 {user ? ( // todo change to auth later when fully implemented
                     <>
                         <Routes>
