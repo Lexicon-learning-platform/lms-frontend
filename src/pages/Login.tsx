@@ -1,27 +1,49 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import apiCall from "../functions/apiCall.ts";
+import type {AuthResponse} from "../models/AuthResponse.ts";
+import {useAuth} from "../context/AuthContext.tsx";
 
 export default function Login() {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const { accessToken, setAccessToken } = useAuth();
 
     async function handleSubmit() {
         setError("");
 
         try {
-            // todo
-            // await loginUser(userName, password);
-
-            console.log({
-                userName,
-                password
+            const response = await apiCall<AuthResponse>("/auth/login", {
+                method: "POST",
+                body: JSON.stringify({
+                    username: userName,
+                    password: password
+                })
             });
+
+            if (!response) {
+                throw new Error("Registration failed");
+            }
+
+
+
+            console.log(accessToken);
+            console.log(response);
+
+            //todo call and set user, call and set course
+
+
+
+
+            setAccessToken(response.accessToken);
+            setUserName("");
+            setPassword("");
         } catch (error) {
             setError(
                 error instanceof Error
                     ? error.message
-                    : "Login failed"
+                    : "Registration failed"
             );
         }
     }
