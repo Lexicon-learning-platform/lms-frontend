@@ -25,7 +25,8 @@ function App() {
             {user ? ( // todo change to auth later when fully implemented
                     <>
                         <Routes>
-                            <Route path="/" element={<Home />} />
+                            <Route path="/" element={<PublicHome />} />
+                            <Route path="/home" element={<Home />} />
                             <Route path="/modules" element={<Modules />} />
                             <Route path="/schedule" element={<Schedule />} />
                             <Route path="/submissions" element={<Submissions />} />

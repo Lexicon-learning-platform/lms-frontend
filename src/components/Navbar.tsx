@@ -25,7 +25,7 @@ export default function Navbar() {
                 </div>
                 
                 <div className={`${mobileMenuOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row gap-4 md:gap-6 pb-4 md:pb-0 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100 bg-white w-full md:w-auto`}>
-                    <NavLink onClick={() => setMobileMenuOpen(false)} to="/">Hem</NavLink>
+                    <NavLink onClick={() => setMobileMenuOpen(false)} to="/home">Hem</NavLink>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/modules">Moduler</NavLink>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/schedule">Schema</NavLink>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/submissions">Inlämningar</NavLink>
