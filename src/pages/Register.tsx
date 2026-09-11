@@ -3,6 +3,9 @@ import { Link } from "react-router";
 import apiCall from "../functions/apiCall.ts";
 import {useAuth} from "../context/AuthContext.tsx";
 import type {AuthResponse} from "../models/AuthResponse.ts";
+import type {ApplicationUser} from "../models/applicationUser.ts";
+import {authApiCall} from "../functions/authApiCall.ts";
+import {useCurrentUser} from "../context/currentUserContext.ts";
 
 export default function Register() {
     const [userName, setUserName] = useState("");
@@ -10,11 +13,12 @@ export default function Register() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const { setAccessToken } = useAuth();
-
+    const {setUser} = useCurrentUser();
 
     async function handleSubmit() {
         setError("");
         setSuccess("");
+
 
         try {
             const response = await apiCall<AuthResponse>("/auth/register", {
@@ -29,10 +33,27 @@ export default function Register() {
                 throw new Error("Registration failed");
             }
 
-            setAccessToken(response.accessToken);
+            const token = response.accessToken;
+
+            setAccessToken(token);
+
+            const userResponse = await authApiCall<ApplicationUser>(
+                "/auth/getuser",
+                token,
+                setAccessToken
+            );
+
+            if (!userResponse) {
+                throw new Error("Could not get user");
+            }
+
+            setUser(userResponse);
             setUserName("");
             setPassword("");
             setSuccess("Registration successful.");
+            //todo fetch course
+
+
         } catch (error) {
             setError(
                 error instanceof Error
