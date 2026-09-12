@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { currentUserContext } from "../context/currentUser/currentUserContext.ts";
-import { useAuth } from "../context/auth/AuthContext.tsx";
+import { useAuth } from "../context/auth/AuthContext.ts";
 import * as React from "react";
 
 interface Props {

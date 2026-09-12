@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AuthContext } from "./AuthContext.tsx";
+import { AuthContext } from "./AuthContext.ts";
 import * as React from "react";
 import apiCall from "../../functions/apiCall.ts";
 import type {AuthResponse} from "../../models/authResponse.ts";

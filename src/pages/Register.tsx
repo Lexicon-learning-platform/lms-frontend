@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import apiCall from "../functions/apiCall.ts";
-import {useAuth} from "../context/auth/AuthContext.tsx";
+import {useAuth} from "../context/auth/AuthContext.ts";
 import type {AuthResponse} from "../models/authResponse.ts";
 import type {ApplicationUser} from "../models/applicationUser.ts";
 import {authApiCall} from "../functions/authApiCall.ts";

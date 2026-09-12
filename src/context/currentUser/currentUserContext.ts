@@ -7,8 +7,7 @@ export type CurrentUserContextType = {
     setUser: Dispatch<SetStateAction<ApplicationUser | null>>;
 };
 
-export const currentUserContext =
-    createContext<CurrentUserContextType | null>(null);
+export const currentUserContext = createContext<CurrentUserContextType | null>(null);
 
 export function useCurrentUser() {
     const context = useContext(currentUserContext);
