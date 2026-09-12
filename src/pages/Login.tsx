@@ -2,12 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router";
 import apiCall from "../functions/apiCall.ts";
 import type { AuthResponse } from "../models/authResponse.ts";
-import type { ApplicationUser } from "../models/applicationUser.ts";
 import { useAuth } from "../context/auth/AuthContext.ts";
 import { useCurrentUser } from "../context/currentUser/currentUserContext.ts";
-import {authApiCall} from "../functions/authApiCall.ts";
 import {useCurrentCourse} from "../context/course/CourseContext.ts";
-import type {Course} from "../models/course.ts";
+import {loadSession} from "../functions/loadSession.ts";
 
 
 export default function Login() {
@@ -35,33 +33,13 @@ export default function Login() {
                 throw new Error("Login failed");
             }
 
-            const token = response.accessToken;
-
-            setAccessToken(token);
-
-            const userResponse = await authApiCall<ApplicationUser>(
-                "/auth/getuser",
-                token,
-                setAccessToken
+            await loadSession(
+                response.accessToken,
+                setAccessToken,
+                setUser,
+                setCourse
             );
 
-            if (!userResponse) {
-                throw new Error("Could not get user");
-            }
-
-            setUser(userResponse);
-
-            const courseResponse = await authApiCall<Course>(
-                "/courses/my-course",
-                token,
-                setAccessToken
-            );
-
-            if (!courseResponse) {
-                throw new Error("Could not get course");
-            }
-
-            setCourse(courseResponse);
             setUserName("");
             setPassword("");
         } catch (error) {
@@ -72,7 +50,6 @@ export default function Login() {
             );
         }
     }
-
     return (
         <div className="p-6 flex flex-1">
             <form

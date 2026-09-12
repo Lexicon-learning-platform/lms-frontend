@@ -3,11 +3,9 @@ import { Link } from "react-router";
 import apiCall from "../functions/apiCall.ts";
 import {useAuth} from "../context/auth/AuthContext.ts";
 import type {AuthResponse} from "../models/authResponse.ts";
-import type {ApplicationUser} from "../models/applicationUser.ts";
-import {authApiCall} from "../functions/authApiCall.ts";
 import {useCurrentUser} from "../context/currentUser/currentUserContext.ts";
 import {useCurrentCourse} from "../context/course/CourseContext.ts";
-import type {Course} from "../models/course.ts";
+import {loadSession} from "../functions/loadSession.ts";
 
 export default function Register() {
     const [userName, setUserName] = useState("");
@@ -22,7 +20,6 @@ export default function Register() {
         setError("");
         setSuccess("");
 
-
         try {
             const response = await apiCall<AuthResponse>("/auth/register", {
                 method: "POST",
@@ -36,38 +33,16 @@ export default function Register() {
                 throw new Error("Registration failed");
             }
 
-            const token = response.accessToken;
-
-            setAccessToken(token);
-
-            const userResponse = await authApiCall<ApplicationUser>(
-                "/auth/getuser",
-                token,
-                setAccessToken
+            await loadSession(
+                response.accessToken,
+                setAccessToken,
+                setUser,
+                setCourse
             );
 
-            if (!userResponse) {
-                throw new Error("Could not get user");
-            }
-
-            setUser(userResponse);
             setUserName("");
             setPassword("");
             setSuccess("Registration successful.");
-
-            const courseResponse = await authApiCall<Course>(
-                "/courses/my-course",
-                token,
-                setAccessToken
-            );
-
-            if (!courseResponse) {
-                throw new Error("Could not get course");
-            }
-
-            setCourse(courseResponse);
-
-
         } catch (error) {
             setError(
                 error instanceof Error
