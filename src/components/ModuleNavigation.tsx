@@ -12,13 +12,13 @@ interface ModuleNavigationProps {
 export default function ModuleNavigation(props: ModuleNavigationProps) {
     const [expandedModuleIds, setExpandedModuleIds] = useState<string[]>([]);
 
-    function toggleModule(moduleId: string) {
+    const toggleModule = (moduleId: string) => {
         setExpandedModuleIds(current =>
             current.includes(moduleId)
                 ? current.filter(id => id !== moduleId)
                 : [...current, moduleId]
         );
-    }
+    };
 
     return (
         <>

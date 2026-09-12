@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import apiCall from "../functions/apiCall.ts";
-import {useAuth} from "../context/AuthContext.tsx";
+import {useAuth} from "../context/auth/AuthContext.tsx";
 import type {AuthResponse} from "../models/AuthResponse.ts";
 import type {ApplicationUser} from "../models/applicationUser.ts";
 import {authApiCall} from "../functions/authApiCall.ts";
-import {useCurrentUser} from "../context/currentUserContext.ts";
+import {useCurrentUser} from "../context/currentUser/currentUserContext.ts";
 
 export default function Register() {
     const [userName, setUserName] = useState("");

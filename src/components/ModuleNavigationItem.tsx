@@ -12,25 +12,21 @@ interface ModuleNavigationItemProps {
     onSelectActivity: (activityId: string) => void;
 }
 
-export default function ModuleNavigationItem(
-    props: ModuleNavigationItemProps
-) {
+export default function ModuleNavigationItem(props: ModuleNavigationItemProps) {
     const [expandedActivityTypes, setExpandedActivityTypes] =
         useState<string[]>([]);
 
-    function toggleActivityType(type: string) {
+    const toggleActivityType = (type: string) => {
         setExpandedActivityTypes(current =>
             current.includes(type)
                 ? current.filter(item => item !== type)
                 : [...current, type]
         );
-    }
+    };
 
-    function getActivitiesByType(type: string) {
-        return props.module.activities.filter(
-            activity => activity.activityType === type
-        );
-    }
+    const getActivitiesByType = (type: string) => props.module.activities.filter(
+        activity => activity.activityType === type
+    );
 
     function renderActivityTypes() {
 

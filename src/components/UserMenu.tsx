@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { currentUserContext } from "../context/currentUserContext.ts";
-import { useAuth } from "../context/AuthContext.tsx";
+import { currentUserContext } from "../context/currentUser/currentUserContext.ts";
+import { useAuth } from "../context/auth/AuthContext.tsx";
 import * as React from "react";
 
 interface Props {
@@ -16,7 +16,7 @@ export default function UserMenu({ children }: Props) {
     async function handleLogout() {
         try {
             // todo
-            // await logoutUser();
+            //await logoutUser();
 
             setAccessToken(null);
             setUser(null);

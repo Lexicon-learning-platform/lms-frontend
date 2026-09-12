@@ -3,8 +3,8 @@ import { Link } from "react-router";
 import apiCall from "../functions/apiCall.ts";
 import type { AuthResponse } from "../models/AuthResponse.ts";
 import type { ApplicationUser } from "../models/applicationUser.ts";
-import { useAuth } from "../context/AuthContext.tsx";
-import { useCurrentUser } from "../context/currentUserContext.ts";
+import { useAuth } from "../context/auth/AuthContext.tsx";
+import { useCurrentUser } from "../context/currentUser/currentUserContext.ts";
 import {authApiCall} from "../functions/authApiCall.ts";
 
 

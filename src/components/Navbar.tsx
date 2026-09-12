@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { currentUserContext } from "../context/currentUserContext.ts";
+import { currentUserContext } from "../context/currentUser/currentUserContext.ts";
 import { useContext, useState } from "react";
 
 export default function Navbar() {

@@ -6,7 +6,7 @@ import Modules from "./pages/Modules.tsx";
 import Schedule from "./pages/Schedule.tsx";
 import Footer from "./components/Footer.tsx";
 import {useContext} from "react";
-import {currentUserContext} from "./context/currentUserContext.ts";
+import {currentUserContext} from "./context/currentUser/currentUserContext.ts";
 import PublicHome from "./pages/PublicHome.tsx";
 import Login from "./pages/Login.tsx";
 import Register from "./pages/Register.tsx";

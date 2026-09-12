@@ -1,9 +1,7 @@
 import UserMenu from "./UserMenu.tsx";
 import logo from "../assets/lexicon-logo.svg";
-
 import { Link } from "react-router-dom";
-import { useCurrentUser } from "../context/currentUserContext.ts";
-
+import { useCurrentUser } from "../context/currentUser/currentUserContext.ts";
 
 export default function Header() {
     const {user} = useCurrentUser();

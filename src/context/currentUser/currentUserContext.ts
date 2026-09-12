@@ -1,6 +1,6 @@
 import {createContext, type Dispatch, type SetStateAction, useContext} from "react";
 
-import type { ApplicationUser } from "../models/applicationUser.ts";
+import type { ApplicationUser } from "../../models/applicationUser.ts";
 
 export type CurrentUserContextType = {
     user: ApplicationUser | null;
