@@ -1,5 +1,5 @@
 import apiCall from "./apiCall.ts";
-import type { AuthResponse } from "../models/AuthResponse.ts";
+import type { AuthResponse } from "../models/authResponse.ts";
 
 type SetAccessToken = (token: string | null) => void;
 

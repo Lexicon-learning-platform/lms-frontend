@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext.tsx";
 import * as React from "react";
 import apiCall from "../../functions/apiCall.ts";
-import type {AuthResponse} from "../../models/AuthResponse.ts";
+import type {AuthResponse} from "../../models/authResponse.ts";
 
 interface Props {
     children: React.ReactNode;
