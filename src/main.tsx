@@ -6,17 +6,18 @@ import "./index.css";
 import App from "./App.tsx";
 import CurrentUserProvider from "./context/currentUser/CurrentUserProvider.tsx";
 import AuthProvider from "./context/auth/AuthProvider.tsx";
+import CurrentCourseProvider from "./context/course/ CourseProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <CurrentUserProvider>
-            <BrowserRouter>
-                <AuthProvider>
-                    <CurrentUserProvider>
+        <BrowserRouter>
+            <CurrentUserProvider>
+                <CurrentCourseProvider>
+                    <AuthProvider>
                         <App />
-                    </CurrentUserProvider>
-                </AuthProvider>
-            </BrowserRouter>
-        </CurrentUserProvider>
+                    </AuthProvider>
+                </CurrentCourseProvider>
+            </CurrentUserProvider>
+        </BrowserRouter>
     </StrictMode>,
 );

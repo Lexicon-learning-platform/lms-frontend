@@ -25,7 +25,7 @@ export default function ModuleNavigationItem(props: ModuleNavigationItemProps) {
     };
 
     const getActivitiesByType = (type: string) => props.module.activities.filter(
-        activity => activity.activityType === type
+        activity => activity.type === type
     );
 
     function renderActivityTypes() {

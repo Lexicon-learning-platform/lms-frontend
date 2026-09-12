@@ -1,19 +1,22 @@
 import { NavLink } from "react-router-dom";
-import { currentUserContext } from "../context/currentUser/currentUserContext.ts";
-import { useContext, useState } from "react";
+import { useCurrentUser } from "../context/currentUser/currentUserContext.ts";
+import { useState } from "react";
+import {useCurrentCourse} from "../context/course/CourseContext.ts";
 
 export default function Navbar() {
-    const { user } = useContext(currentUserContext)!;
+
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { user } = useCurrentUser();
+    const { course } = useCurrentCourse();
 
     return (
         <nav className="w-full bg-white border-b border-slate-200 flex justify-center text-xs font-medium text-slate-500 relative z-40">
             <div className="w-full max-w-[1680px] mx-auto px-4 md:px-12 flex flex-col md:flex-row md:items-center justify-start">
                 <div className="h-[48px] flex items-center justify-between w-full md:w-auto md:mr-8">
                     {user?.role === "teacher" ? (
-                        <button>Webbutveckling ▾</button>
+                        <button>{course?.name ?? "Kurs"} ▾</button>
                     ) : (
-                        <span>Webbutveckling</span>
+                        <span>{course?.name ?? "Kurs"}</span>
                     )}
 
                     <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-slate-600 hover:text-slate-900 text-base">

@@ -6,6 +6,8 @@ import type {AuthResponse} from "../models/authResponse.ts";
 import type {ApplicationUser} from "../models/applicationUser.ts";
 import {authApiCall} from "../functions/authApiCall.ts";
 import {useCurrentUser} from "../context/currentUser/currentUserContext.ts";
+import {useCurrentCourse} from "../context/course/CourseContext.ts";
+import type {Course} from "../models/course.ts";
 
 export default function Register() {
     const [userName, setUserName] = useState("");
@@ -14,6 +16,7 @@ export default function Register() {
     const [success, setSuccess] = useState("");
     const { setAccessToken } = useAuth();
     const {setUser} = useCurrentUser();
+    const { setCourse } = useCurrentCourse();
 
     async function handleSubmit() {
         setError("");
@@ -51,7 +54,18 @@ export default function Register() {
             setUserName("");
             setPassword("");
             setSuccess("Registration successful.");
-            //todo fetch course
+
+            const courseResponse = await authApiCall<Course>(
+                "/courses/my-course",
+                token,
+                setAccessToken
+            );
+
+            if (!courseResponse) {
+                throw new Error("Could not get course");
+            }
+
+            setCourse(courseResponse);
 
 
         } catch (error) {

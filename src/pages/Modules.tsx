@@ -7,6 +7,7 @@ export default function Modules() {
     const [selectedModuleId, setSelectedModuleId] = useState<string | null> (modules[0]?.id ?? "");
     const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
 
+
     const selectedModule = modules.find(module => module.id === selectedModuleId);
     const selectedActivity = modules
         .flatMap(module => module.activities)
@@ -58,7 +59,7 @@ export default function Modules() {
                             </h2>
 
                             <p className="mt-2">
-                                {selectedActivity.description}
+                                {selectedActivity.type}
                             </p>
                         </>
                     )}

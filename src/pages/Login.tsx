@@ -6,6 +6,8 @@ import type { ApplicationUser } from "../models/applicationUser.ts";
 import { useAuth } from "../context/auth/AuthContext.ts";
 import { useCurrentUser } from "../context/currentUser/currentUserContext.ts";
 import {authApiCall} from "../functions/authApiCall.ts";
+import {useCurrentCourse} from "../context/course/CourseContext.ts";
+import type {Course} from "../models/course.ts";
 
 
 export default function Login() {
@@ -15,6 +17,7 @@ export default function Login() {
     const [error, setError] = useState("");
     const {setAccessToken} = useAuth();
     const {setUser} = useCurrentUser();
+    const { setCourse } = useCurrentCourse();
 
     async function handleSubmit() {
         setError("");
@@ -47,8 +50,18 @@ export default function Login() {
             }
 
             setUser(userResponse);
-            //todo fetch and set course
 
+            const courseResponse = await authApiCall<Course>(
+                "/courses/my-course",
+                token,
+                setAccessToken
+            );
+
+            if (!courseResponse) {
+                throw new Error("Could not get course");
+            }
+
+            setCourse(courseResponse);
             setUserName("");
             setPassword("");
         } catch (error) {
