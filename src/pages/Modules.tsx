@@ -1,14 +1,21 @@
 import { useState } from "react";
-import { modules } from "../mock/modules";
 import ModuleNavigation from "../components/ModuleNavigation.tsx";
+import { useCurrentCourse } from "../context/course/CourseContext.ts";
 
 export default function Modules() {
+    const { course } = useCurrentCourse();
 
-    const [selectedModuleId, setSelectedModuleId] = useState<string | null> (modules[0]?.id ?? "");
+    const modules = course?.modules ?? [];
+
+    const [selectedModuleId, setSelectedModuleId] = useState<string | null>(
+        modules[0]?.id ?? null
+    );
     const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
 
+    const selectedModule = modules.find(
+        module => module.id === selectedModuleId
+    );
 
-    const selectedModule = modules.find(module => module.id === selectedModuleId);
     const selectedActivity = modules
         .flatMap(module => module.activities)
         .find(activity => activity.id === selectedActivityId);
@@ -27,6 +34,7 @@ export default function Modules() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 flex-1">
             <aside className="md:order-2 md:col-span-3 h-full w-64 border-l p-4">
                 <ModuleNavigation
+                    modules={modules}
                     selectedModuleId={selectedModuleId}
                     selectedActivityId={selectedActivityId}
                     onSelectModule={selectModule}

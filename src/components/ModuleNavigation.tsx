@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { modules } from "../mock/modules";
 import ModuleNavigationItem from "./ModuleNavigationItem";
+import type { Module } from "../models/module";
 
 interface ModuleNavigationProps {
+    modules: Module[];
     selectedModuleId: string | null;
     selectedActivityId: string | null;
     onSelectModule: (moduleId: string) => void;
@@ -21,23 +22,21 @@ export default function ModuleNavigation(props: ModuleNavigationProps) {
     };
 
     return (
-        <>
-            <nav className="mt-4">
-                <ul className="space-y-4">
-                    {modules.map(module => (
-                        <ModuleNavigationItem
-                            key={module.id}
-                            module={module}
-                            isSelected={module.id === props.selectedModuleId}
-                            selectedActivityId={props.selectedActivityId}
-                            isExpanded={expandedModuleIds.includes(module.id)}
-                            onToggle={() => toggleModule(module.id)}
-                            onSelect={() => props.onSelectModule(module.id)}
-                            onSelectActivity={props.onSelectActivity}
-                        />
-                    ))}
-                </ul>
-            </nav>
-        </>
+        <nav className="mt-4">
+            <ul className="space-y-4">
+                {props.modules.map(module => (
+                    <ModuleNavigationItem
+                        key={module.id}
+                        module={module}
+                        isSelected={module.id === props.selectedModuleId}
+                        selectedActivityId={props.selectedActivityId}
+                        isExpanded={expandedModuleIds.includes(module.id)}
+                        onToggle={() => toggleModule(module.id)}
+                        onSelect={() => props.onSelectModule(module.id)}
+                        onSelectActivity={props.onSelectActivity}
+                    />
+                ))}
+            </ul>
+        </nav>
     );
 }
