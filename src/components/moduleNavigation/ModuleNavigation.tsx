@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ModuleNavigationItem from "./ModuleNavigationItem";
-import type { Module } from "../models/module";
+import ModuleNavigationItem from "./ModuleNavigationItem.tsx";
+import type { Module } from "../../models/module.ts";
 
 interface ModuleNavigationProps {
     modules: Module[];

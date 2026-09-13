@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ModuleNavigation from "../components/ModuleNavigation.tsx";
+import ModuleNavigation from "../components/moduleNavigation/ModuleNavigation.tsx";
 import { useCurrentCourse } from "../context/course/CourseContext.ts";
 
 export default function Modules() {
