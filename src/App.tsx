@@ -28,7 +28,6 @@ function App() {
     useEffect(() => {
         async function restoreSession() {
             try {
-                console.log("1. restoring session");
 
                 const authResponse = await apiCall<AuthResponse>(
                     "/auth/token",
@@ -37,14 +36,11 @@ function App() {
                     }
                 );
 
-                console.log("2. token response:", authResponse);
-
                 if (!authResponse) {
                     console.log("3. no auth response");
                     return;
                 }
 
-                console.log("3. loading session");
 
                 await loadSession(
                     authResponse.accessToken,
@@ -53,7 +49,6 @@ function App() {
                     setCourse
                 );
 
-                console.log("4. session loaded");
             } catch (error) {
                 if (error instanceof Error) {
                     console.log("RESTORE SESSION ERROR:", error.message);
