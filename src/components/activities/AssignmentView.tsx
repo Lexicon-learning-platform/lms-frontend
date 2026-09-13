@@ -10,10 +10,6 @@ export default function AssignmentView({ activity }: { activity: Activity }) {
                 {activity.name}
             </h2>
 
-            <p className="mt-2">
-                {activity.description}
-            </p>
-
             <p className="mt-4">
                 Inlämningsuppgift
             </p>

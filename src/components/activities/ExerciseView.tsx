@@ -9,10 +9,6 @@ export default function ExerciseView({ activity }: { activity: Activity }) {
                 {activity.name}
             </h2>
 
-            <p className="mt-2">
-                {activity.description}
-            </p>
-
             <p className="mt-4">
                 Övning
             </p>
