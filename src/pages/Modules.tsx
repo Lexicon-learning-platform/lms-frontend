@@ -6,15 +6,10 @@ export default function Modules() {
     const { course } = useCurrentCourse();
 
     const modules = course?.modules ?? [];
-
-    const [selectedModuleId, setSelectedModuleId] = useState<string | null>(
-        modules[0]?.id ?? null
-    );
+    const [selectedModuleId, setSelectedModuleId] = useState<string | null>(modules[0]?.id ?? null);
     const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
+    const selectedModule = modules.find(module => module.id === selectedModuleId);
 
-    const selectedModule = modules.find(
-        module => module.id === selectedModuleId
-    );
 
     const selectedActivity = modules
         .flatMap(module => module.activities)
@@ -29,6 +24,8 @@ export default function Modules() {
         setSelectedModuleId(null);
         setSelectedActivityId(activityId);
     }
+
+
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 flex-1">
