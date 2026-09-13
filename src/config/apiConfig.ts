@@ -1,6 +1,8 @@
 
 const apiConfig = {
-    URLstring: "https://localhost:7217/api"
+    URLstring: "http://localhost:5217/api"
+    // URLstring: "https://localhost:7217/api"
+
 }
 
 export default apiConfig
