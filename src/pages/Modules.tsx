@@ -4,7 +4,7 @@ import { useCurrentCourse } from "../context/course/CourseContext.ts";
 import {useAuth} from "../context/auth/AuthContext.ts";
 import type {ModuleExtended} from "../models/moduleExtended.ts";
 import {authApiCall} from "../functions/authApiCall.ts";
-import ActivityContent from "../components/activities/ActivityContent.tsx";
+import Activity from "../components/Activity.tsx";
 
 export default function Modules() {
     const { accessToken, setAccessToken } = useAuth();
@@ -13,6 +13,7 @@ export default function Modules() {
     const modules = course?.modules ?? [];
     const [selectedModuleId, setSelectedModuleId] = useState<string | null>(modules[0]?.id ?? null);
     const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
+    const selectedActivityModule = modules.find(module => module.activities.some(activity => activity.id === selectedActivityId));
     const selectedModule = modules.find(module => module.id === selectedModuleId);
     const [extendedModule, setExtendedModule] = useState<ModuleExtended | null>(null);
 
@@ -74,8 +75,11 @@ export default function Modules() {
                 <div className="mt-6">
 
 
-                    {selectedActivity && (
-                        <ActivityContent activity={selectedActivity} />
+                    {selectedActivity && selectedActivityModule && (
+                        <Activity
+                            activity={selectedActivity}
+                            moduleId={selectedActivityModule.id}
+                        />
                     )}
 
                     {extendedModule &&
