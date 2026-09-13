@@ -37,16 +37,10 @@ export async function authApiCall<T>(
 
     setAccessToken(newAccessToken);
 
-    return apiCall<T>(
-        endpoint,
-        addAuthorizationHeader(options, newAccessToken)
-    );
+    return apiCall<T>(endpoint, addAuthorizationHeader(options, newAccessToken));
 }
 
-function addAuthorizationHeader(
-    options: RequestInit,
-    accessToken: string | null
-): RequestInit {
+function addAuthorizationHeader(options: RequestInit, accessToken: string | null): RequestInit {
     return {
         ...options,
         headers: {
