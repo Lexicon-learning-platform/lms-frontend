@@ -1,29 +1,56 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import ModuleNavigation from "../components/moduleNavigation/ModuleNavigation.tsx";
 import { useCurrentCourse } from "../context/course/CourseContext.ts";
+import {useAuth} from "../context/auth/AuthContext.ts";
+import type {ModuleExtended} from "../models/moduleExtended.ts";
+import {authApiCall} from "../functions/authApiCall.ts";
+import ActivityContent from "../components/activities/ActivityContent.tsx";
 
 export default function Modules() {
+    const { accessToken, setAccessToken } = useAuth();
     const { course } = useCurrentCourse();
 
     const modules = course?.modules ?? [];
     const [selectedModuleId, setSelectedModuleId] = useState<string | null>(modules[0]?.id ?? null);
     const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
     const selectedModule = modules.find(module => module.id === selectedModuleId);
+    const [extendedModule, setExtendedModule] = useState<ModuleExtended | null>(null);
 
 
     const selectedActivity = modules
         .flatMap(module => module.activities)
         .find(activity => activity.id === selectedActivityId);
 
+    function selectActivity(activityId: string) {
+        setSelectedModuleId(null);
+        setSelectedActivityId(activityId);
+        setExtendedModule(null);
+    }
+
     function selectModule(moduleId: string) {
         setSelectedModuleId(moduleId);
         setSelectedActivityId(null);
     }
 
-    function selectActivity(activityId: string) {
-        setSelectedModuleId(null);
-        setSelectedActivityId(activityId);
-    }
+
+
+    useEffect(() => {
+        if (!selectedModuleId) {
+            return;
+        }
+
+        async function loadModule() {
+            const response = await authApiCall<ModuleExtended>(
+                `/modules/${selectedModuleId}`,
+                accessToken,
+                setAccessToken
+            );
+
+            setExtendedModule(response);
+        }
+
+        loadModule();
+    }, [selectedModuleId, accessToken, setAccessToken]);
 
 
 
@@ -41,33 +68,18 @@ export default function Modules() {
 
             <section className="md:order-1 md:col-span-9 space-y-6 h-full">
                 <h1 className="text-xl font-bold">
-                    Moduler
+                    TODO: Make something nice here...
                 </h1>
 
                 <div className="mt-6">
-                    {selectedModule && (
-                        <>
-                            <h2 className="text-lg font-semibold">
-                                {selectedModule.name}
-                            </h2>
 
-                            <p className="mt-2">
-                                {selectedModule.description}
-                            </p>
-                        </>
-                    )}
 
                     {selectedActivity && (
-                        <>
-                            <h2 className="text-lg font-semibold">
-                                {selectedActivity.name}
-                            </h2>
-
-                            <p className="mt-2">
-                                {selectedActivity.type}
-                            </p>
-                        </>
+                        <ActivityContent activity={selectedActivity} />
                     )}
+
+                    {extendedModule &&
+                        (<pre className="whitespace-pre-wrap">{JSON.stringify(extendedModule, null, 4)}</pre>)}
 
                     {!selectedModule && !selectedActivity && (
                         <p>Välj en modul eller aktivitet</p>
