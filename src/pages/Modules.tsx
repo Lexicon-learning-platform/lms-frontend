@@ -51,7 +51,7 @@ export default function Modules() {
 
                     {selectedActivity && selectedActivityModule && (
                         <Activity
-                            activity={selectedActivity}
+                            activityId={selectedActivity.id}
                             moduleId={selectedActivityModule.id}
                         />
                     )}
