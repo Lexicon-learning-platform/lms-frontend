@@ -32,10 +32,6 @@ export async function loadSession(
         throw new Error("Could not get user");
     }
 
-    if (!courseResponse) {
-        throw new Error("Could not get course");
-    }
-
     setUser(userResponse);
     setCourse(courseResponse);
 }
