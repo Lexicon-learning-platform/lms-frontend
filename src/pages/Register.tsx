@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import apiCall from "../functions/apiCall.ts";
 import {useAuth} from "../context/auth/AuthContext.ts";
 import type {AuthResponse} from "../models/authResponse.ts";
