@@ -5,10 +5,10 @@ import { authApiCall } from "../functions/authApiCall.ts";
 
 interface ActivityContentProps {
     moduleId: string;
-    activity: Activity;
+    activityId: string;
 }
 
-export default function Activity({ moduleId, activity }: ActivityContentProps) {
+export default function Activity({ moduleId, activityId }: ActivityContentProps) {
     const { accessToken, setAccessToken } = useAuth();
     const [detailedActivity, setDetailedActivity] = useState<Activity | null>(null);
 
@@ -16,7 +16,7 @@ export default function Activity({ moduleId, activity }: ActivityContentProps) {
         async function loadActivity() {
             try {
                 const response = await authApiCall<Activity>(
-                    `/modules/${moduleId}/activities/${activity.id}`,
+                    `/modules/${moduleId}/activities/${activityId}`,
                     accessToken,
                     setAccessToken
                 );
@@ -30,7 +30,7 @@ export default function Activity({ moduleId, activity }: ActivityContentProps) {
         }
 
         loadActivity();
-    }, [activity.id, accessToken, setAccessToken, moduleId]);
+    }, [activityId, accessToken, setAccessToken, moduleId]);
 
     return (
         <pre className="whitespace-pre-wrap">
