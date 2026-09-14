@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import apiCall from "../functions/apiCall.ts";
 import type { AuthResponse } from "../models/authResponse.ts";
 import { useAuth } from "../context/auth/AuthContext.ts";
 import { useCurrentUser } from "../context/currentUser/currentUserContext.ts";
 import {useCurrentCourse} from "../context/course/CourseContext.ts";
 import {loadSession} from "../functions/loadSession.ts";
-
 
 export default function Login() {
 
@@ -16,6 +15,7 @@ export default function Login() {
     const {setAccessToken} = useAuth();
     const {setUser} = useCurrentUser();
     const { setCourse } = useCurrentCourse();
+    const navigate = useNavigate();
 
     async function handleSubmit() {
         setError("");
@@ -42,6 +42,7 @@ export default function Login() {
 
             setUserName("");
             setPassword("");
+            navigate("/home");
         } catch (error) {
             setError(
                 error instanceof Error
