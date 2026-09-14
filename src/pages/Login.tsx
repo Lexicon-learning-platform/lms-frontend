@@ -51,66 +51,54 @@ export default function Login() {
         }
     }
     return (
-        <div className="p-6 flex flex-1">
+        <div className="p-6 flex flex-1 justify-center">
             <form
-                className="border p-3 w-100 max-w-xl mx-auto self-start"
+                className="w-full max-w-md bg-white rounded-2xl border border-slate-100 shadow-sm p-8 self-start"
                 onSubmit={e => {
-                    e.preventDefault();
-                    handleSubmit();
+                e.preventDefault();
+                handleSubmit();
                 }}
             >
-                <h2 className="text-xl font-bold">
-                    Login
-                </h2>
+                <h2 className="text-xl font-bold text-slate-800 text-center">Medlemssidan</h2>
 
-                <div className="mt-3 grid gap-2">
-                    <label htmlFor="userName">
-                        Username
-                    </label>
-
-                    <input
-                        id="userName"
-                        className="border p-2 bg-white text-black"
+                <div className="mt-6 flex flex-col gap-4">
+                    <div className="flex flex-col gap-1.5">
+                    <label htmlFor="userName" className="text-xs font-semibold text-slate-600">Användarnamn</label>
+                    <input id="userName" 
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm transition-colors focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20" 
                         type="text"
                         autoComplete="username"
                         value={userName}
                         onChange={e => setUserName(e.target.value)}
                     />
+                </div>
 
-                    <label htmlFor="password">
-                        Password
-                    </label>
-
-                    <input
-                        id="password"
-                        className="border p-2 bg-white text-black"
+                <div className="flex flex-col gap-1.5">
+                    <label htmlFor="password" className="text-xs font-semibold text-slate-600">Lösenord</label>
+                    <input id="password"
+                        className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm transition-colors focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                         type="password"
                         autoComplete="current-password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                     />
+                </div>
 
-                    <button
-                        className="border p-2 font-bold hover:bg-gray-100"
-                        type="submit"
-                    >
-                        Login
-                    </button>
+                {error && (
+                    <p className="text-xs font-medium text-red-600 mt-1">{error}</p>
+                )}
 
-                    {error && (
-                        <p className="text-sm text-red-600">
-                            {error}
-                        </p>
-                    )}
+                <button type="submit" className="w-full mt-2 py-2.5 px-4 bg-slate-800 hover:bg-slate-700 text-white text-sm font-semibold rounded-xl shadow-sm">
+                    Logga in
+                </button>
 
-                    <Link
-                        to="/register"
-                        className="text-sm underline"
-                    >
-                        Don't have an account?
+                <div className="text-center mt-2">
+                    <Link to="/register" className="text-xs text-slate-500 hover:text-blue-600 hover:underline transition-colors">
+                        Har du inget konto? Registrera dig här!
                     </Link>
                 </div>
-            </form>
+            </div>
+        </form>
         </div>
     );
 }
