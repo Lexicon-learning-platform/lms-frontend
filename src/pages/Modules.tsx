@@ -1,31 +1,39 @@
 import { useState } from "react";
-import { modules } from "../mock/modules";
-import ModuleNavigation from "../components/ModuleNavigation.tsx";
+import ModuleNavigation from "../components/moduleNavigation/ModuleNavigation.tsx";
+import { useCurrentCourse } from "../context/course/CourseContext.ts";
+import Activity from "../components/Activity.tsx";
+import Module from "../components/Module.tsx";
 
 export default function Modules() {
 
-    const [selectedModuleId, setSelectedModuleId] = useState<string | null> (modules[0]?.id ?? "");
+    const { course } = useCurrentCourse();
+    const modules = course?.modules ?? [];
+    const [selectedModuleId, setSelectedModuleId] = useState<string | null>(modules[0]?.id ?? null);
     const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
 
-    const selectedModule = modules.find(module => module.id === selectedModuleId);
     const selectedActivity = modules
         .flatMap(module => module.activities)
         .find(activity => activity.id === selectedActivityId);
 
-    function selectModule(moduleId: string) {
+    const selectedActivityModule = modules.find(module =>
+        module.activities.some(activity => activity.id === selectedActivityId)
+    );
+
+    const selectModule = (moduleId: string) => {
         setSelectedModuleId(moduleId);
         setSelectedActivityId(null);
-    }
+    };
 
-    function selectActivity(activityId: string) {
+    const selectActivity = (activityId: string) => {
         setSelectedModuleId(null);
         setSelectedActivityId(activityId);
-    }
+    };
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 flex-1">
             <aside className="md:order-2 md:col-span-3 h-full w-64 border-l p-4">
                 <ModuleNavigation
+                    modules={modules}
                     selectedModuleId={selectedModuleId}
                     selectedActivityId={selectedActivityId}
                     onSelectModule={selectModule}
@@ -34,36 +42,21 @@ export default function Modules() {
             </aside>
 
             <section className="md:order-1 md:col-span-9 space-y-6 h-full">
-                <h1 className="text-xl font-bold">
-                    Moduler
-                </h1>
+
 
                 <div className="mt-6">
-                    {selectedModule && (
-                        <>
-                            <h2 className="text-lg font-semibold">
-                                {selectedModule.name}
-                            </h2>
-
-                            <p className="mt-2">
-                                {selectedModule.description}
-                            </p>
-                        </>
+                    {selectedModuleId && (
+                        <Module moduleId={selectedModuleId} />
                     )}
 
-                    {selectedActivity && (
-                        <>
-                            <h2 className="text-lg font-semibold">
-                                {selectedActivity.name}
-                            </h2>
-
-                            <p className="mt-2">
-                                {selectedActivity.description}
-                            </p>
-                        </>
+                    {selectedActivity && selectedActivityModule && (
+                        <Activity
+                            activity={selectedActivity}
+                            moduleId={selectedActivityModule.id}
+                        />
                     )}
 
-                    {!selectedModule && !selectedActivity && (
+                    {!selectedModuleId && !selectedActivity && (
                         <p>Välj en modul eller aktivitet</p>
                     )}
                 </div>

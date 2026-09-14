@@ -5,6 +5,6 @@ export interface Module {
     id: string;
     name: string | null;
     description: string | null;
-    durationDays: number | null;
+    duration: number | null;
     activities: Activity[];
 }

@@ -1,27 +1,57 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import apiCall from "../functions/apiCall.ts";
+import {useAuth} from "../context/auth/AuthContext.ts";
+import type {AuthResponse} from "../models/authResponse.ts";
+import {useCurrentUser} from "../context/currentUser/currentUserContext.ts";
+import {useCurrentCourse} from "../context/course/CourseContext.ts";
+import {loadSession} from "../functions/loadSession.ts";
 
 export default function Register() {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const { setAccessToken } = useAuth();
+    const {setUser} = useCurrentUser();
+    const { setCourse } = useCurrentCourse();
 
     async function handleSubmit() {
         setError("");
         setSuccess("");
 
         try {
-            // todo
-            // await registerUser(email, password);
+            const response = await apiCall<AuthResponse>("/auth/register", {
+                method: "POST",
+                body: JSON.stringify({
+                    username: userName,
+                    password: password
+                })
+            });
+
+            if (!response) {
+                throw new Error("Registration failed");
+            }
+
+            await loadSession(
+                response.accessToken,
+                setAccessToken,
+                setUser,
+                setCourse
+            );
 
             setUserName("");
             setPassword("");
-            setSuccess("Registration successful. Check your email to verify your account.");
+            setSuccess("Registration successful.");
         } catch (error) {
-            setError(error instanceof Error ? error.message : "Registration failed");
+            setError(
+                error instanceof Error
+                    ? error.message
+                    : "Registration failed"
+            );
         }
     }
+
     return (
         <div className="p-6 flex flex-1">
             <form
@@ -34,14 +64,14 @@ export default function Register() {
                 <h2 className="text-xl font-bold">Register</h2>
 
                 <div className="mt-3 grid gap-2">
-                    <label htmlFor="email">
-                        Email
+                    <label htmlFor="text">
+                        Name
                     </label>
 
                     <input
-                        id="email"
+                        id="text"
                         className="border p-2 bg-white text-black"
-                        type="email"
+                        type="text"
                         value={userName}
                         onChange={e => setUserName(e.target.value)}
                     />

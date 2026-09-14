@@ -1,26 +1,18 @@
-
-
 export interface Activity {
     id: string;
-    activityType: ActivityType;
     name: string | null;
-    description: string | null;
-    startTimeOffset: number;
-    durationMinutes: number;
+    startOffset: number;
+    duration: number;
+    type: ActivityType;
 }
 
-export type ActivityType =
-    | "Elearn"
-    | "Lecture"
-    | "Exercise"
-    | "Assignment"
-    | "Other";
-
-
-export const activityTypes: ActivityType[] = [
+export const activityTypes = [
     "Elearn",
     "Lecture",
     "Exercise",
     "Assignment",
+    "SelfStudy",
     "Other"
-];
+] as const;
+
+export type ActivityType = typeof activityTypes[number];

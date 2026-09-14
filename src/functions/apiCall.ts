@@ -1,4 +1,4 @@
-import globalValues from '../context/globalValues';
+import apiConfig from '../config/apiConfig.ts';
 
 /*
 Example use:
@@ -15,7 +15,7 @@ Example use:
 
 const apiCall = async <T, >(endpoint: string, options: RequestInit = {}): Promise<T | null> => {
 
-    const response = await fetch(`${globalValues.URLstring}${endpoint}`, {
+    const response = await fetch(`${apiConfig.URLstring}${endpoint}`, {
         ...options,
         credentials: "include",
         headers: {

@@ -1,22 +1,47 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import apiCall from "../functions/apiCall.ts";
+import type { AuthResponse } from "../models/authResponse.ts";
+import { useAuth } from "../context/auth/AuthContext.ts";
+import { useCurrentUser } from "../context/currentUser/currentUserContext.ts";
+import {useCurrentCourse} from "../context/course/CourseContext.ts";
+import {loadSession} from "../functions/loadSession.ts";
+
 
 export default function Login() {
+
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const {setAccessToken} = useAuth();
+    const {setUser} = useCurrentUser();
+    const { setCourse } = useCurrentCourse();
 
     async function handleSubmit() {
         setError("");
 
         try {
-            // todo
-            // await loginUser(userName, password);
-
-            console.log({
-                userName,
-                password
+            const response = await apiCall<AuthResponse>("/auth/login", {
+                method: "POST",
+                body: JSON.stringify({
+                    username: userName,
+                    password: password
+                })
             });
+
+            if (!response) {
+                throw new Error("Login failed");
+            }
+
+            await loadSession(
+                response.accessToken,
+                setAccessToken,
+                setUser,
+                setCourse
+            );
+
+            setUserName("");
+            setPassword("");
         } catch (error) {
             setError(
                 error instanceof Error
@@ -25,7 +50,6 @@ export default function Login() {
             );
         }
     }
-
     return (
         <div className="p-6 flex flex-1">
             <form
@@ -48,6 +72,7 @@ export default function Login() {
                         id="userName"
                         className="border p-2 bg-white text-black"
                         type="text"
+                        autoComplete="username"
                         value={userName}
                         onChange={e => setUserName(e.target.value)}
                     />
@@ -60,6 +85,7 @@ export default function Login() {
                         id="password"
                         className="border p-2 bg-white text-black"
                         type="password"
+                        autoComplete="current-password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                     />

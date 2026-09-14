@@ -1,7 +1,9 @@
 import { useContext, useState } from "react";
-import { currentUserContext } from "../context/currentUserContext.ts";
-import { useAuth } from "../context/AuthContext.tsx";
+import { currentUserContext } from "../context/currentUser/currentUserContext.ts";
+import { useAuth } from "../context/auth/AuthContext.ts";
 import * as React from "react";
+import apiCall from "../functions/apiCall.ts";
+import {useCurrentCourse} from "../context/course/CourseContext.ts";
 
 interface Props {
     children: React.ReactNode;
@@ -12,19 +14,24 @@ export default function UserMenu({ children }: Props) {
 
     const { setUser } = useContext(currentUserContext)!;
     const { setAccessToken } = useAuth();
+    const { setCourse } = useCurrentCourse();
+
 
     async function handleLogout() {
         try {
-            // todo
-            // await logoutUser();
+            await apiCall("/auth/logout", {
+                method: "POST"
+            });
 
-            setAccessToken(null);
-            setUser(null);
         } catch (error) {
             console.error("Logout failed", error);
         }
+        finally {
+            setAccessToken(null);
+            setUser(null);
+            setCourse(null);
+        }
     }
-
     return (
         <div className="relative">
             <button
