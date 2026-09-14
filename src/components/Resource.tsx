@@ -32,9 +32,14 @@ export default function Resource({ resourceId }: Props) {
         loadResource();
     }, [resourceId, accessToken, setAccessToken]);
 
+    if (!detailedResource) return <p>Loading resource...</p>;
+
     return (
-        <pre className="whitespace-pre-wrap">
-            {JSON.stringify(detailedResource, null, 4)}
-        </pre>
+        <div>
+            <h2 className="text-2xl font-bold mb-8">{detailedResource.name}</h2>
+            <p>{detailedResource.description}</p>
+            <hr className="my-8" />
+            <p>{detailedResource.data}</p>
+        </div>
     );
 }
