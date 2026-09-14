@@ -8,6 +8,7 @@ import Footer from "./components/Footer.tsx";
 import {useCurrentUser} from "./context/currentUser/currentUserContext.ts";
 import PublicHome from "./pages/PublicHome.tsx";
 import Login from "./pages/Login.tsx";
+import Admin from "./pages/Admin.tsx";
 import Register from "./pages/Register.tsx";
 import Submissions from "./pages/Submissions.tsx";
 import apiCall from "./functions/apiCall.ts";
@@ -83,6 +84,7 @@ function App() {
                         <Route path="/modules" element={<Modules />} />
                         <Route path="/schedule" element={<Schedule />} />
                         <Route path="/submissions" element={<Submissions />} />
+                        {user.role=="Admin" ? (<Route path="/admin" element={<Admin />} />) : (<></>)}
                     </Routes>
                 ) : (
                     <Routes>
