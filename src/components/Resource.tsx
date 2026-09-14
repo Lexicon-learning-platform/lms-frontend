@@ -7,7 +7,7 @@ interface Props {
     resourceId: string;
 }
 
-export default function Resource({ resourceId }: Props) {
+export default function ResourceDetail({ resourceId }: Props) {
     const { accessToken, setAccessToken } = useAuth();
     const [detailedResource, setDetailedResource] = useState<Resource | null>(
         null,

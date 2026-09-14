@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/auth/AuthContext.ts";
 import { authApiCall } from "../functions/authApiCall.ts";
 import type { ActivityExtended } from "../models/activityExtended.ts";
-import DialogBase from "./DialogBase.tsx";
-import Resource from "./Resource.tsx";
+import ResourceList from "./ResourceList.tsx";
 
 interface ActivityContentProps {
     moduleId: string;
@@ -17,8 +16,6 @@ export default function Activity({
     const { accessToken, setAccessToken } = useAuth();
     const [detailedActivity, setDetailedActivity] =
         useState<ActivityExtended | null>(null);
-    const [isResourceOpen, setIsResourceOpen] = useState<boolean>(false);
-    const [clickedResource, setClickedResource] = useState<string>("");
 
     useEffect(() => {
         async function loadActivity() {
@@ -53,42 +50,7 @@ export default function Activity({
             </div>
             <p>{detailedActivity.description}</p>
             <hr className="my-8" />
-            <div>
-                {detailedActivity.resources.length > 0 ? (
-                    detailedActivity.resources.map((r) => (
-                        <div
-                            key={r.id}
-                            className="border border-black rounded-lg p-1.5 mb-3"
-                            onClick={() => {
-                                setClickedResource(r.id);
-                                setIsResourceOpen(!isResourceOpen);
-                            }}
-                        >
-                            <h4 className="font-semibold">{r.name}</h4>
-                            <p>{r.description}</p>
-                            <p>Typ: {r.type}</p>
-                        </div>
-                    ))
-                ) : (
-                    <span>Inga resurser registrerade</span>
-                )}
-            </div>
-            {isResourceOpen && (
-                <DialogBase
-                    onClose={() => {
-                        setClickedResource("");
-                        setIsResourceOpen(false);
-                    }}
-                >
-                    <h3
-                        id="dialog-title"
-                        className="w-full text-center text-2xl mb-4"
-                    >
-                        Resursdetaljer
-                    </h3>
-                    <Resource resourceId={clickedResource} />
-                </DialogBase>
-            )}
+            <ResourceList resources={detailedActivity.resources} />
         </div>
     );
 }

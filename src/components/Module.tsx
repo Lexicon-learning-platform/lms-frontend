@@ -4,7 +4,7 @@ import { authApiCall } from "../functions/authApiCall.ts";
 import type { ModuleExtended } from "../models/moduleExtended.ts";
 import Activity from "./Activity.tsx";
 import DialogBase from "./DialogBase.tsx";
-import Resource from "./Resource.tsx";
+import ResourceList from "./ResourceList.tsx";
 
 interface ModuleProps {
     moduleId: string;
@@ -15,8 +15,6 @@ export default function Module({ moduleId }: ModuleProps) {
     const [module, setModule] = useState<ModuleExtended | null>(null);
     const [isActivityOpen, setIsActivityOpen] = useState<boolean>(false);
     const [clickedActivity, setClickedActivity] = useState<string>("");
-    const [isResourceOpen, setIsResourceOpen] = useState<boolean>(false);
-    const [clickedResource, setClickedResource] = useState<string>("");
 
     useEffect(() => {
         async function loadModule() {
@@ -103,48 +101,7 @@ export default function Module({ moduleId }: ModuleProps) {
                 )}
             </div>
             <hr className="my-8" />
-            <div>
-                <div className="flex flex-col md:flex-row justify-center md:justify-between">
-                    <h3 className="text-xl font-semibold mb-4">Resurser</h3>
-                    <div>{/* insert pagination component */}</div>
-                </div>
-                <div className="">
-                    {module.resources.length > 0 ? (
-                        module.resources.map((r) => (
-                            <div
-                                key={r.id}
-                                className="border border-black rounded-lg p-1.5 mb-3"
-                                onClick={() => {
-                                    setClickedResource(r.id);
-                                    setIsResourceOpen(!isResourceOpen);
-                                }}
-                            >
-                                <h4 className="font-semibold">{r.name}</h4>
-                                <p>{r.description}</p>
-                                <p>Typ: {r.type}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <span>Inga resurser registrerade</span>
-                    )}
-                </div>
-                {isResourceOpen && (
-                    <DialogBase
-                        onClose={() => {
-                            setClickedResource("");
-                            setIsResourceOpen(false);
-                        }}
-                    >
-                        <h3
-                            id="dialog-title"
-                            className="w-full text-center text-2xl mb-4"
-                        >
-                            Resursdetaljer
-                        </h3>
-                        <Resource resourceId={clickedResource} />
-                    </DialogBase>
-                )}
-            </div>
+            <ResourceList resources={module.resources} />
         </div>
     );
 }
