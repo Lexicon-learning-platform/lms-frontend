@@ -32,7 +32,7 @@ export default function Navbar() {
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/modules">Moduler</NavLink>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/schedule">Schema</NavLink>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/submissions">Inlämningar</NavLink>
-                    <NavLink onClick={() => setMobileMenuOpen(false)} to="/admin">Admin</NavLink>
+                    {user?.role?.toLowerCase() === "admin" && (<NavLink onClick={() => setMobileMenuOpen(false)} to="/admin">Admin</NavLink>)}
                 </div>
             </div>
         </nav>

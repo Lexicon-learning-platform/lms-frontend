@@ -34,7 +34,7 @@ export default function Register() {
                 throw new Error("Registration failed");
             }
 
-            await loadSession(
+            const user = await loadSession(
                 response.accessToken,
                 setAccessToken,
                 setUser,
@@ -44,7 +44,12 @@ export default function Register() {
             setUserName("");
             setPassword("");
             setSuccess("Registration successful.");
-            navigate("/home");
+
+            if (user?.role?.toLowerCase()  === "admin") {
+                navigate("/admin");
+            } else {
+                navigate("/home");
+            }
 
         } catch (error) {
             setError(

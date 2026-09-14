@@ -32,7 +32,7 @@ export default function Login() {
                 throw new Error("Login failed");
             }
 
-            await loadSession(
+            const user = await loadSession(
                 response.accessToken,
                 setAccessToken,
                 setUser,
@@ -41,7 +41,14 @@ export default function Login() {
 
             setUserName("");
             setPassword("");
-            navigate("/home");
+
+            if (user?.role?.toLowerCase() === "admin") {
+                navigate("/admin");
+            } else {
+                navigate("/home");
+            }
+
+
         } catch (error) {
             setError(error instanceof Error ? error.message : "Login failed");
         }
