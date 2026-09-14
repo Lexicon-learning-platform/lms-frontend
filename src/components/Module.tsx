@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/auth/AuthContext.ts";
 import { authApiCall } from "../functions/authApiCall.ts";
 import type { ModuleExtended } from "../models/moduleExtended.ts";
+import Activity from "./Activity.tsx";
+import DialogBase from "./DialogBase.tsx";
 
 interface ModuleProps {
     moduleId: string;
@@ -10,6 +12,8 @@ interface ModuleProps {
 export default function Module({ moduleId }: ModuleProps) {
     const { accessToken, setAccessToken } = useAuth();
     const [module, setModule] = useState<ModuleExtended | null>(null);
+    const [isActivityOpen, setIsActivityOpen] = useState<boolean>(false);
+    const [clickedActivity, setClickedActivity] = useState<string>("");
 
     useEffect(() => {
         async function loadModule() {
@@ -57,8 +61,14 @@ export default function Module({ moduleId }: ModuleProps) {
                                 <div
                                     key={a.id}
                                     className="w-full border border-black rounded-lg p-1.5"
+                                    onClick={() => {
+                                        setClickedActivity(a.id);
+                                        setIsActivityOpen(!isActivityOpen);
+                                    }}
                                 >
-                                    <h4 className="font-semibold text-nowrap">{a.name}</h4>
+                                    <h4 className="font-semibold text-nowrap">
+                                        {a.name}
+                                    </h4>
                                     <p className="text-nowrap">Typ: {a.type}</p>
                                     <p className="text-nowrap">
                                         Längd: {a.duration} minuter
@@ -70,6 +80,25 @@ export default function Module({ moduleId }: ModuleProps) {
                     )}
                 </div>
             </div>
+            {isActivityOpen && (
+                <DialogBase
+                    onClose={() => {
+                        setClickedActivity("");
+                        setIsActivityOpen(false);
+                    }}
+                >
+                    <h3
+                        id="dialog-title"
+                        className="w-full text-center text-2xl mb-4"
+                    >
+                        Aktivitestdetaljer
+                    </h3>
+                    <Activity
+                        moduleId={module.id}
+                        activityId={clickedActivity}
+                    />
+                </DialogBase>
+            )}
             <hr className="my-8" />
             <div>
                 <div className="flex flex-col md:flex-row justify-center md:justify-between">

@@ -21,10 +21,11 @@ export default function DialogBase({ children, onClose }: Props) {
             onClick={onClose}
         >
             <div
-                className="realtive w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 border  rounded-2xl shadow-xl"
+                className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 border bg-white rounded-2xl shadow-xl"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="dialog-title"
+                onClick={(e) => e.stopPropagation()}
             >
                 <button
                     type="button"
