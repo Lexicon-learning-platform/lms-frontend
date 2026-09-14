@@ -45,7 +45,10 @@ export default function Module({ moduleId }: ModuleProps) {
             </div>
             <hr className="my-8" />
             <div>
-                <h3 className="text-xl font-semibold mb-4">Aktiviteter</h3>
+                <div className="flex flex-col md:flex-row justify-center md:justify-between">
+                    <h3 className="text-xl font-semibold mb-4">Aktiviteter</h3>
+                    <div>{/* insert pagination component</div> */}</div>
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                     {module.activities.length > 0 ? (
                         module.activities
@@ -53,11 +56,11 @@ export default function Module({ moduleId }: ModuleProps) {
                             .map((a) => (
                                 <div
                                     key={a.id}
-                                    className="min-w-40 max-w-60 border border-black rounded-lg p-1.5"
+                                    className="w-full border border-black rounded-lg p-1.5"
                                 >
-                                    <h4 className="font-semibold">{a.name}</h4>
-                                    <p>Typ: {a.type}</p>
-                                    <p className="">
+                                    <h4 className="font-semibold text-nowrap">{a.name}</h4>
+                                    <p className="text-nowrap">Typ: {a.type}</p>
+                                    <p className="text-nowrap">
                                         Längd: {a.duration} minuter
                                     </p>
                                 </div>
@@ -69,7 +72,10 @@ export default function Module({ moduleId }: ModuleProps) {
             </div>
             <hr className="my-8" />
             <div>
-                <h3 className="text-xl font-semibold mb-4">Resurser</h3>
+                <div className="flex flex-col md:flex-row justify-center md:justify-between">
+                    <h3 className="text-xl font-semibold mb-4">Resurser</h3>
+                    <div>{/* insert pagination component */}</div>
+                </div>
                 <div className="">
                     {module.resources.length > 0 ? (
                         module.resources.map((r) => (
