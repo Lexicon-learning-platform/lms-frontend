@@ -82,26 +82,26 @@ export default function Module({ moduleId }: ModuleProps) {
                         <span>Inga aktiviteter registrerade</span>
                     )}
                 </div>
-            </div>
-            {isActivityOpen && (
-                <DialogBase
-                    onClose={() => {
-                        setClickedActivity("");
-                        setIsActivityOpen(false);
-                    }}
-                >
-                    <h3
-                        id="dialog-title"
-                        className="w-full text-center text-2xl mb-4"
+                {isActivityOpen && (
+                    <DialogBase
+                        onClose={() => {
+                            setClickedActivity("");
+                            setIsActivityOpen(false);
+                        }}
                     >
-                        Aktivitestdetaljer
-                    </h3>
-                    <Activity
-                        moduleId={module.id}
-                        activityId={clickedActivity}
-                    />
-                </DialogBase>
-            )}
+                        <h3
+                            id="dialog-title"
+                            className="w-full text-center text-2xl mb-4"
+                        >
+                            Aktivitestdetaljer
+                        </h3>
+                        <Activity
+                            moduleId={module.id}
+                            activityId={clickedActivity}
+                        />
+                    </DialogBase>
+                )}
+            </div>
             <hr className="my-8" />
             <div>
                 <div className="flex flex-col md:flex-row justify-center md:justify-between">
@@ -128,23 +128,23 @@ export default function Module({ moduleId }: ModuleProps) {
                         <span>Inga resurser registrerade</span>
                     )}
                 </div>
-            </div>
-            {isResourceOpen && (
-                <DialogBase
-                    onClose={() => {
-                        setClickedResource("");
-                        setIsResourceOpen(false);
-                    }}
-                >
-                    <h3
-                        id="dialog-title"
-                        className="w-full text-center text-2xl mb-4"
+                {isResourceOpen && (
+                    <DialogBase
+                        onClose={() => {
+                            setClickedResource("");
+                            setIsResourceOpen(false);
+                        }}
                     >
-                        Resursdetaljer
-                    </h3>
-                    <Resource resourceId={clickedResource} />
-                </DialogBase>
-            )}
+                        <h3
+                            id="dialog-title"
+                            className="w-full text-center text-2xl mb-4"
+                        >
+                            Resursdetaljer
+                        </h3>
+                        <Resource resourceId={clickedResource} />
+                    </DialogBase>
+                )}
+            </div>
         </div>
     );
 }
