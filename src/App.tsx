@@ -76,6 +76,9 @@ function App() {
                 <Navbar />
             }
 
+            {/* Remove this later */}
+           <Admin/> 
+
             <main className="w-full max-w-[1680px] mx-auto flex-1 px-4 md:px-12 py-6 md:py-8 flex flex-col">
                 {user ? (
                     <Routes>
