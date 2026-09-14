@@ -48,8 +48,7 @@ export default function Activity({
                     {detailedActivity.name}
                 </h2>
                 <p className="text-nowrap">
-                    Längd: {detailedActivity.duration} dag
-                    {detailedActivity.duration > 1 ? "ar" : ""}
+                    Längd: {detailedActivity.duration} minuter
                 </p>
             </div>
             <p>{detailedActivity.description}</p>
