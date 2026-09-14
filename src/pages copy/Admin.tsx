@@ -1,8 +1,8 @@
 import UserList from "../components/UserControl";
-
+import { useState } from "react";
 
 export default function Admin() {
-
+const [updateList, setUpdateList] = useState(0)
 
 
     return (
