@@ -1,3 +1,5 @@
+import Card from "../components/Card";
+
 export default function Home() {
     return (
         <>
@@ -6,15 +8,10 @@ export default function Home() {
             </h1>
 
             <section className="col-span-12 space-y-6">
-                <div className="border p-4">
-                    <p className="font-semibold">
-                        ⚠️ Ej inlämnad uppgift
-                    </p>
-
-                    <p>
-                        Du har inte lämnat in uppgiften "React Components".
-                    </p>
-                </div>
+                <Card>
+                    <h3 className="font-semibold text-slate-800 text-sm">⚠️ Ej inlämnad uppgift</h3>
+                    <p className="text-xs text-slate-500">Du har inte lämnat in uppgiften "React Components".</p>
+                </Card>
             </section>
 
             <section className="col-span-12 space-y-6">
