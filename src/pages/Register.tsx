@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import apiCall from "../functions/apiCall.ts";
 import {useAuth} from "../context/auth/AuthContext.ts";
 import type {AuthResponse} from "../models/authResponse.ts";
@@ -15,6 +15,7 @@ export default function Register() {
     const { setAccessToken } = useAuth();
     const {setUser} = useCurrentUser();
     const { setCourse } = useCurrentCourse();
+    const navigate = useNavigate();
 
     async function handleSubmit() {
         setError("");
@@ -43,6 +44,8 @@ export default function Register() {
             setUserName("");
             setPassword("");
             setSuccess("Registration successful.");
+            navigate("/home");
+
         } catch (error) {
             setError(
                 error instanceof Error
