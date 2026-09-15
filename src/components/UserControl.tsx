@@ -5,6 +5,7 @@ import ErrorMessage from './Error.tsx'
 import {authApiCall} from '../functions/authApiCall.ts'
 import { useAuth } from "../context/auth/AuthContext.ts";
 import type { UserStats } from '../models/userStats.ts'
+import AdjustUserCourse from './AdjustUserCourse.tsx'
 
 
 
@@ -192,6 +193,10 @@ return (<>
             <h1>{activeUserStats?.userName || "Användarnamn"}</h1>
             <h2>{activeUserStats?.givenName || "Förnamn"} {activeUserStats?.lastName || "Efternamn"}</h2>
             <h2>{activeUserStats?.id || "Id"}</h2>
+
+            <div className="flex w-1/2">
+            <AdjustUserCourse userId={activeUserStats?.id || null} />
+            </div>
 
 <hr></hr>
           <span>Kurser</span>
