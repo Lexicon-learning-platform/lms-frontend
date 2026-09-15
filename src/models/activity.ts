@@ -7,12 +7,11 @@ export interface Activity {
 }
 
 export const activityTypes = [
-    "Elearn",
     "Lecture",
+    "SelfStudy",
     "Exercise",
     "Assignment",
-    "SelfStudy",
-    "Other"
+    "Review"
 ] as const;
 
 export type ActivityType = typeof activityTypes[number];
