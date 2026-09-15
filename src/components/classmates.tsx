@@ -16,7 +16,7 @@ useEffect(() => {
     let isMounted = true; 
     const fetchAllClassmates = async () => {
     try {
-        const data = await authApiCall<ApplicationUser[]>(`/admin/getusers`,
+        const data = await authApiCall<ApplicationUser[]>(`/courses/getclassmates`,
             accessToken,
             setAccessToken,
          { method: 'GET' });

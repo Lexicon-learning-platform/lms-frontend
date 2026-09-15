@@ -4,6 +4,7 @@ import { useAuth } from "../context/auth/AuthContext.ts";
 import * as React from "react";
 import apiCall from "../functions/apiCall.ts";
 import {useCurrentCourse} from "../context/course/CourseContext.ts";
+import { Link } from "react-router-dom";
 
 interface Props {
     children: React.ReactNode;
@@ -50,9 +51,13 @@ export default function UserMenu({ children }: Props) {
                     <a href="#" className="block px-4 py-2 text-slate-700 hover:bg-slate-50">
                         Profil
                     </a>
-                    <a href="#" className="block px-4 py-2 text-slate-700 hover:bg-slate-50">
+                    <Link
+                        to="/settings"
+                        onClick={() => setIsOpen(false)}
+                        className="block px-4 py-2 text-slate-700 hover:bg-slate-50"
+                    >
                         Inställningar
-                    </a>
+                    </Link>
                     <hr className="my-1 border-slate-100" />
                     <button
                         className="block px-4 py-2 text-slate-700 hover:bg-slate-50"
