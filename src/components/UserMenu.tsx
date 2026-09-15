@@ -4,19 +4,20 @@ import { useAuth } from "../context/auth/AuthContext.ts";
 import * as React from "react";
 import apiCall from "../functions/apiCall.ts";
 import {useCurrentCourse} from "../context/course/CourseContext.ts";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+
 
 interface Props {
     children: React.ReactNode;
 }
 
 export default function UserMenu({ children }: Props) {
-    const [isOpen, setIsOpen] = useState(false);
 
+    const [isOpen, setIsOpen] = useState(false);
     const { setUser } = useContext(currentUserContext)!;
     const { setAccessToken } = useAuth();
     const { setCourse } = useCurrentCourse();
-
+    const navigate = useNavigate();
 
     async function handleLogout() {
         try {
@@ -31,6 +32,7 @@ export default function UserMenu({ children }: Props) {
             setAccessToken(null);
             setUser(null);
             setCourse(null);
+            navigate("/");
         }
     }
     return (
