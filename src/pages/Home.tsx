@@ -1,4 +1,5 @@
 import Card from "../components/Card";
+import Classmates from "../components/classmates";
 
 export default function Home() {
     return (
@@ -41,6 +42,13 @@ export default function Home() {
                     <p>Idag 10:00</p>
                 </div>
             </section>
+
+           <section className="col-span-12 space-y-6">
+            <div className="w-1/4">
+            <Classmates  />
+            </div>
+           </section>
+
         </>
     );
 }
