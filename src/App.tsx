@@ -18,6 +18,8 @@ import {useEffect} from "react";
 import {useCurrentCourse} from "./context/course/CourseContext.ts";
 import {useAuth} from "./context/auth/AuthContext.ts";
 import {loadSession} from "./functions/loadSession.ts";
+import Settings from "./pages/Settings.tsx";
+
 
 function App() {
 
@@ -87,6 +89,7 @@ function App() {
                         <Route path="/modules" element={<Modules />} />
                         <Route path="/schedule" element={<Schedule />} />
                         <Route path="/submissions" element={<Submissions />} />
+                        <Route path="/settings" element={<Settings />} />
                         {user?.role?.toLowerCase() === "admin" ? (<Route path="/admin" element={<Admin />} />) : (<></>)}
                     </Routes>
                 ) : (
