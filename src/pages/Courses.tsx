@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CourseControl from "../components/CourseControl.tsx";
 import ModuleControl from "../components/ModuleControl.tsx";
+import ActivityControl from "../components/ActivityControl.tsx";
 
 export default function Courses() {
     const [moduleVersion, setModuleVersion] = useState(0);
@@ -21,7 +22,7 @@ export default function Courses() {
                     <CourseControl moduleRefreshSignal={moduleVersion} />
                 </div>
 
-                <div className="mx-auto px-4 md:px-12 pb-12 w-full">
+                <div className="mx-auto px-4 md:px-12 w-full">
                     <div className="max-w-3xl mb-8">
                         <h2 className="text-2xl font-bold text-slate-900 mb-2">
                             Moduler
@@ -32,6 +33,19 @@ export default function Courses() {
                     </div>
 
                     <ModuleControl onSaved={() => setModuleVersion(v => v + 1)} />
+                </div>
+
+                <div className="mx-auto px-4 md:px-12 pb-12 w-full">
+                    <div className="max-w-3xl mb-8">
+                        <h2 className="text-2xl font-bold text-slate-900 mb-2">
+                            Aktiviteter
+                        </h2>
+                        <p className="text-slate-600">
+                            Skapa och redigera aktiviteter för en modul.
+                        </p>
+                    </div>
+
+                    <ActivityControl />
                 </div>
             </section>
         </main>
