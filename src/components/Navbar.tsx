@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useCurrentUser } from "../context/currentUser/currentUserContext.ts";
 import { useState } from "react";
 import {useCurrentCourse} from "../context/course/CourseContext.ts";
+import CourseSwitcher from "./CourseSwitcher.tsx";
 
 export default function Navbar() {
 
@@ -13,8 +14,8 @@ export default function Navbar() {
         <nav className="w-full bg-white border-b border-slate-200 flex justify-center text-xs font-medium text-slate-500 relative z-40">
             <div className="w-full max-w-[1680px] mx-auto px-4 md:px-12 flex flex-col md:flex-row md:items-center justify-start">
                 <div className="h-[48px] flex items-center justify-between w-full md:w-auto md:mr-8">
-                    {user?.role === "teacher" ? (
-                        <button>{course?.name ?? "Kurs"} ▾</button>
+                    {user?.role === "Teacher" || user?.role === "Admin" ? (
+                        <CourseSwitcher />
                     ) : (
                         <span>{course?.name ?? "Kurs"}</span>
                     )}
@@ -26,13 +27,18 @@ export default function Navbar() {
 
                     {/* <span className="h-5 w-px bg-slate-300" aria-hidden="true" /> */}
                 </div>
-                
+
                 <div className={`${mobileMenuOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row gap-4 md:gap-6 pb-4 md:pb-0 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100 bg-white w-full md:w-auto`}>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/home">Hem</NavLink>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/modules">Moduler</NavLink>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/schedule">Schema</NavLink>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/submissions">Inlämningar</NavLink>
-                    {user?.role?.toLowerCase() === "admin" && (<NavLink onClick={() => setMobileMenuOpen(false)} to="/admin">Admin</NavLink>)}
+                    {(user?.role === "Teacher" || user?.role === "Admin") && (
+                        <NavLink onClick={() => setMobileMenuOpen(false)} to="/courses">Kurser</NavLink>
+                    )}
+                    {user?.role === "Admin" && (
+                        <NavLink onClick={() => setMobileMenuOpen(false)} to="/admin">Admin</NavLink>
+                    )}
                 </div>
             </div>
         </nav>

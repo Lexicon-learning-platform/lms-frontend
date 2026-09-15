@@ -3,11 +3,19 @@ import ModuleNavigation from "../components/moduleNavigation/ModuleNavigation.ts
 import { useCurrentCourse } from "../context/course/CourseContext.ts";
 import Activity from "../components/Activity.tsx";
 import Module from "../components/Module.tsx";
+import type { Module as ModuleModel } from "../models/module.ts";
 
 export default function Modules() {
-
     const { course } = useCurrentCourse();
-    const modules = course?.modules ?? [];
+
+    return <ModulesForCourse key={course?.id ?? "none"} modules={course?.modules ?? []} />;
+}
+
+interface ModulesForCourseProps {
+    modules: ModuleModel[];
+}
+
+function ModulesForCourse({ modules }: ModulesForCourseProps) {
     const [selectedModuleId, setSelectedModuleId] = useState<string | null>(modules[0]?.id ?? null);
     const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
 
