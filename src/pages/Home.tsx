@@ -48,7 +48,7 @@ export default function Home() {
 
             <section className="col-span-12 space-y-6">
                 <div className="w-1/4">
-                    <Classmates />
+                    <Classmates courseId={course.id} />
                 </div>
             </section>
         </>
