@@ -4,6 +4,7 @@ import ErrorMessage from "./Error.tsx";
 import { useAuth } from "../context/auth/AuthContext.ts";
 import { authApiCall } from "../functions/authApiCall.ts";
 import type { Module } from "../models/module.ts";
+import ResourceManager from "./ResourceManager.tsx";
 
 interface ModuleControlProps {
     onSaved?: () => void;
@@ -197,6 +198,16 @@ export default function ModuleControl({ onSaved }: ModuleControlProps) {
                     </div>
 
                     <ErrorMessage error={error} />
+
+                    {selectedModuleId && (
+                        <div className="flex flex-col gap-1 border-t border-slate-300 pt-4">
+                            <span className="font-semibold text-sm">Resurser</span>
+                            <ResourceManager
+                                key={selectedModuleId}
+                                resourcesEndpoint={`/modules/${selectedModuleId}/resources`}
+                            />
+                        </div>
+                    )}
                 </div>
             </main>
         </div>

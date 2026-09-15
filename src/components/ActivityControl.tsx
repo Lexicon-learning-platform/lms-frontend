@@ -5,6 +5,7 @@ import { useAuth } from "../context/auth/AuthContext.ts";
 import { authApiCall } from "../functions/authApiCall.ts";
 import type { Module } from "../models/module.ts";
 import { activityTypes, type ActivityType } from "../models/activity.ts";
+import ResourceManager from "./ResourceManager.tsx";
 
 interface ActivityListItem {
     id: string;
@@ -299,6 +300,16 @@ export default function ActivityControl() {
                         </div>
 
                         <ErrorMessage error={error} />
+
+                        {selectedActivityId && (
+                            <div className="flex flex-col gap-1 border-t border-slate-300 pt-4">
+                                <span className="font-semibold text-sm">Resurser</span>
+                                <ResourceManager
+                                    key={selectedActivityId}
+                                    resourcesEndpoint={`/modules/${selectedModuleId}/activities/${selectedActivityId}/resources`}
+                                />
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <div className="bg-slate-200 rounded-xl border border-slate-900 flex flex-col gap-4 p-6">

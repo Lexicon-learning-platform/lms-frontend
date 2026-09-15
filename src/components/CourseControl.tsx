@@ -6,6 +6,7 @@ import { authApiCall } from "../functions/authApiCall.ts";
 import type { Course } from "../models/course.ts";
 import type { CourseSummary } from "../models/courseSummary.ts";
 import type { Module } from "../models/module.ts";
+import ResourceManager from "./ResourceManager.tsx";
 
 interface CourseControlProps {
     // Bumped by ModuleControl whenever a module is created/edited, so the
@@ -383,6 +384,16 @@ export default function CourseControl({ moduleRefreshSignal = 0 }: CourseControl
                     </div>
 
                     <ErrorMessage error={error} />
+
+                    {selectedCourseId && (
+                        <div className="flex flex-col gap-1 border-t border-slate-300 pt-4">
+                            <span className="font-semibold text-sm">Resurser</span>
+                            <ResourceManager
+                                key={selectedCourseId}
+                                resourcesEndpoint={`/courses/${selectedCourseId}/resources`}
+                            />
+                        </div>
+                    )}
                 </div>
             </main>
         </div>
