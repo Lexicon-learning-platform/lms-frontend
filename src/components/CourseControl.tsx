@@ -137,6 +137,17 @@ export default function CourseControl({ moduleRefreshSignal = 0 }: CourseControl
         );
     }
 
+    function moveModule(index: number, direction: -1 | 1) {
+        setModuleIds(current => {
+            const target = index + direction;
+            if (target < 0 || target >= current.length) return current;
+
+            const next = [...current];
+            [next[index], next[target]] = [next[target], next[index]];
+            return next;
+        });
+    }
+
     function startNewCourse() {
         setSelectedCourseId("");
         resetForm();
@@ -175,6 +186,17 @@ export default function CourseControl({ moduleRefreshSignal = 0 }: CourseControl
             setError(err instanceof Error ? err.message : "Kunde inte spara kursen");
         }
     }
+
+    const attachedModules: { module: Module; offset: number }[] = [];
+    let cursor = 0;
+    for (const moduleId of moduleIds) {
+        const module = allModules.find(m => m.id === moduleId);
+        if (!module) continue;
+        attachedModules.push({ module, offset: cursor });
+        cursor += module.duration ?? 0;
+    }
+
+    const availableModules = allModules.filter(m => !moduleIds.includes(m.id));
 
     return (
         <div className="flex flex-col md:flex-row gap-6">
@@ -246,25 +268,83 @@ export default function CourseControl({ moduleRefreshSignal = 0 }: CourseControl
                     </label>
 
                     <div className="flex flex-col gap-1 text-sm">
-                        <span className="font-semibold">Moduler i kursen</span>
+                        <span className="font-semibold">Moduler i kursen (i ordning)</span>
+                        <span className="text-xs text-slate-500">
+                            Ordningen styr när varje modul startar - flytta en modul för att ändra dess startdag.
+                        </span>
 
-                        {allModules.length === 0 ? (
+                        {attachedModules.length === 0 ? (
+                            <span className="text-slate-500">Inga moduler tillagda ännu.</span>
+                        ) : (
+                            <ul className="flex flex-col gap-1">
+                                {attachedModules.map(({ module, offset }, index) => (
+                                    <li
+                                        key={module.id}
+                                        className="flex items-center gap-2 bg-slate-100 border border-slate-700 rounded-lg p-2"
+                                    >
+                                        <div className="flex flex-col">
+                                            <button
+                                                type="button"
+                                                className="leading-none px-1 disabled:opacity-30"
+                                                disabled={index === 0}
+                                                onClick={() => moveModule(index, -1)}
+                                                aria-label={`Flytta ${module.name} tidigare`}
+                                            >
+                                                ▲
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="leading-none px-1 disabled:opacity-30"
+                                                disabled={index === attachedModules.length - 1}
+                                                onClick={() => moveModule(index, 1)}
+                                                aria-label={`Flytta ${module.name} senare`}
+                                            >
+                                                ▼
+                                            </button>
+                                        </div>
+
+                                        <div className="flex-1">
+                                            <div className="font-medium">{module.name}</div>
+                                            <div className="text-xs text-slate-500">
+                                                Startdag {offset} · Längd {module.duration} dag{module.duration !== 1 ? "ar" : ""}
+                                            </div>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            className="text-red-600 text-xs"
+                                            onClick={() => toggleModule(module.id)}
+                                        >
+                                            Ta bort
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+
+                        <span className="font-semibold mt-3">Tillgängliga moduler</span>
+
+                        {availableModules.length === 0 ? (
                             <span className="text-slate-500">
-                                Inga moduler skapade ännu - skapa en nedan under "Moduler".
+                                {allModules.length === 0
+                                    ? "Inga moduler skapade ännu - skapa en nedan under \"Moduler\"."
+                                    : "Alla moduler är redan tillagda i kursen."}
                             </span>
                         ) : (
-                            <div className="flex flex-col gap-1 max-h-48 overflow-y-auto bg-slate-100 border border-slate-700 rounded-lg p-2">
-                                {allModules.map(m => (
-                                    <label key={m.id} className="flex items-center gap-2">
-                                        <input
-                                            type="checkbox"
-                                            checked={moduleIds.includes(m.id)}
-                                            onChange={() => toggleModule(m.id)}
-                                        />
+                            <ul className="flex flex-col gap-1 max-h-36 overflow-y-auto bg-slate-100 border border-slate-700 rounded-lg p-2">
+                                {availableModules.map(m => (
+                                    <li key={m.id} className="flex items-center justify-between gap-2">
                                         {m.name}
-                                    </label>
+                                        <button
+                                            type="button"
+                                            className="text-emerald-700 text-xs"
+                                            onClick={() => toggleModule(m.id)}
+                                        >
+                                            Lägg till
+                                        </button>
+                                    </li>
                                 ))}
-                            </div>
+                            </ul>
                         )}
                     </div>
 
