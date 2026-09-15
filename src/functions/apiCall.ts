@@ -24,15 +24,16 @@ const apiCall = async <T, >(endpoint: string, options: RequestInit = {}): Promis
         }
     });
 
-    if (response.status === 401) {      // Unauthorized
 
+    if (response.status === 401) { // Unauthorized
         throw new Error(`${response.status}`);
     }
 
-    if (response.status === 403) {    // Forbidden  
 
+    if (response.status === 403) {  // Forbidden
         throw new Error(`${response.status}`);
     }
+
 
     if (response.status === 404) {
         throw new Error(`${await response.text()}`);

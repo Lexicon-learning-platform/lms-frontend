@@ -14,7 +14,7 @@ export default function Admin() {
                             Administrativ Dashboard
                         </h1>
                         <p className="text-xl text-slate-600 leading-relaxed">
-Gör administrativa ändringar här.
+                            Gör administrativa ändringar här.
                         </p>
                     </div>
 

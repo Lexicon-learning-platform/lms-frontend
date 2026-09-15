@@ -5,6 +5,7 @@ import ErrorMessage from './Error.tsx'
 import {authApiCall} from '../functions/authApiCall.ts'
 import { useAuth } from "../context/auth/AuthContext.ts";
 import type { UserStats } from '../models/userStats.ts'
+import AdjustUserCourse from './AdjustUserCourse.tsx'
 
 
 
@@ -25,6 +26,7 @@ const UserList = () => {
     const [newUserRole, setNewUserRole] = useState("");
 
 useEffect(() => {
+  if(selectedUser!='') {
     let isMounted = true; 
     const getUserStats = async () => {
     try {
@@ -48,7 +50,7 @@ useEffect(() => {
     }
     }
 
-getUserStats()
+getUserStats()}
 }, [selectedUser]);
 
 
@@ -84,7 +86,7 @@ fetchAllUsers()
 const deleteUser = async () => {
     if(selectedUser != "") {
       try {
-        await authApiCall(`/deleteuser/${selectedUser}`, accessToken, setAccessToken,
+        await authApiCall(`/admin/deleteuser/${selectedUser}`, accessToken, setAccessToken,
          { method: 'DELETE' });
       setUpdateTrigger(Date.now());
     } catch (err: unknown) {
@@ -97,7 +99,7 @@ const deleteUser = async () => {
   const disableUser = async () => {
     if(selectedUser != "") {
       try {
-        await authApiCall(`/disableuser/${selectedUser}`, accessToken, setAccessToken,
+        await authApiCall(`/admin/disableuser/${selectedUser}`, accessToken, setAccessToken,
          { method: 'PUT' });
       setUpdateTrigger(Date.now());
     } catch (err: unknown) {
@@ -110,7 +112,7 @@ const deleteUser = async () => {
   const enableUser = async () => {
     if(selectedUser != "") {
       try {
-        await authApiCall(`/enableuser/${selectedUser}`, accessToken, setAccessToken,
+        await authApiCall(`/admin/enableuser/${selectedUser}`, accessToken, setAccessToken,
          { method: 'PUT' });
       setUpdateTrigger(Date.now());
     } catch (err: unknown) {
@@ -123,7 +125,7 @@ const deleteUser = async () => {
   const register = async () => {
 
       try {
-        await authApiCall(`/register/?role=${newUserRole}`, accessToken, setAccessToken,
+        await authApiCall(`/admin/register/?role=${newUserRole}`, accessToken, setAccessToken,
          { method: 'POST',
           body: JSON.stringify({
             username: newUserName,
@@ -146,7 +148,7 @@ return (<>
 <aside className='flex flex-col w-1/4'>
     <div id="alterUser" className="bg-slate-200 rounded-xl border border-slate-900 flex flex-col gap-6 p-6 m-6 h-auto">
     <select name="UserList" onChange={(e) => setSelectedUser(e.target.value)}>
-        <option value="">...</option>
+        <option key="..." value="">...</option>
         {users.map(user => (
 
         <option key={user.id} value={user.id}>{user.userName}</option>
@@ -191,6 +193,10 @@ return (<>
             <h1>{activeUserStats?.userName || "Användarnamn"}</h1>
             <h2>{activeUserStats?.givenName || "Förnamn"} {activeUserStats?.lastName || "Efternamn"}</h2>
             <h2>{activeUserStats?.id || "Id"}</h2>
+
+            <div className="flex w-1/2">
+            <AdjustUserCourse userId={activeUserStats?.id || null} />
+            </div>
 
 <hr></hr>
           <span>Kurser</span>

@@ -27,7 +27,7 @@ export default function Navbar() {
 
                     {/* <span className="h-5 w-px bg-slate-300" aria-hidden="true" /> */}
                 </div>
-                
+
                 <div className={`${mobileMenuOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row gap-4 md:gap-6 pb-4 md:pb-0 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100 bg-white w-full md:w-auto`}>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/home">Hem</NavLink>
                     <NavLink onClick={() => setMobileMenuOpen(false)} to="/modules">Moduler</NavLink>
@@ -36,7 +36,9 @@ export default function Navbar() {
                     {(user?.role === "Teacher" || user?.role === "Admin") && (
                         <NavLink onClick={() => setMobileMenuOpen(false)} to="/courses">Kurser</NavLink>
                     )}
-                    <NavLink onClick={() => setMobileMenuOpen(false)} to="/admin">Admin</NavLink>
+                    {user?.role === "Admin" && (
+                        <NavLink onClick={() => setMobileMenuOpen(false)} to="/admin">Admin</NavLink>
+                    )}
                 </div>
             </div>
         </nav>
