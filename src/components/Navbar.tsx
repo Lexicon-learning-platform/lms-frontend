@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useCurrentUser } from "../context/currentUser/currentUserContext.ts";
 import { useState } from "react";
 import {useCurrentCourse} from "../context/course/CourseContext.ts";
+import CourseSwitcher from "./CourseSwitcher.tsx";
 
 export default function Navbar() {
 
@@ -13,8 +14,8 @@ export default function Navbar() {
         <nav className="w-full bg-white border-b border-slate-200 flex justify-center text-xs font-medium text-slate-500 relative z-40">
             <div className="w-full max-w-[1680px] mx-auto px-4 md:px-12 flex flex-col md:flex-row md:items-center justify-start">
                 <div className="h-[48px] flex items-center justify-between w-full md:w-auto md:mr-8">
-                    {user?.role === "teacher" ? (
-                        <button>{course?.name ?? "Kurs"} ▾</button>
+                    {user?.role === "Teacher" || user?.role === "Admin" ? (
+                        <CourseSwitcher />
                     ) : (
                         <span>{course?.name ?? "Kurs"}</span>
                     )}
