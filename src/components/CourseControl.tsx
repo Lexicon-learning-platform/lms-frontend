@@ -187,6 +187,27 @@ export default function CourseControl({ moduleRefreshSignal = 0 }: CourseControl
         }
     }
 
+    async function deleteCourse() {
+        if (!selectedCourseId) return;
+        if (!window.confirm(`Radera kursen "${name}"? Det går inte att ångra.`)) return;
+
+        setError("");
+
+        try {
+            await authApiCall(
+                `/courses/${selectedCourseId}`,
+                accessToken,
+                setAccessToken,
+                { method: "DELETE" }
+            );
+
+            startNewCourse();
+            setUpdateTrigger(Date.now());
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Kunde inte radera kursen");
+        }
+    }
+
     const attachedModules: { module: Module; offset: number }[] = [];
     let cursor = 0;
     for (const moduleId of moduleIds) {
@@ -348,7 +369,16 @@ export default function CourseControl({ moduleRefreshSignal = 0 }: CourseControl
                         )}
                     </div>
 
-                    <div className="flex gap-2 justify-end">
+                    <div className="flex gap-2 justify-end items-center">
+                        {selectedCourseId && (
+                            <button
+                                type="button"
+                                className="text-red-600 text-sm mr-auto hover:underline"
+                                onClick={deleteCourse}
+                            >
+                                Radera kurs
+                            </button>
+                        )}
                         <Button label="Spara" onClick={saveCourse} />
                     </div>
 

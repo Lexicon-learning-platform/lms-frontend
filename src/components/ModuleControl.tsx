@@ -102,6 +102,28 @@ export default function ModuleControl({ onSaved }: ModuleControlProps) {
         }
     }
 
+    async function deleteModule() {
+        if (!selectedModuleId) return;
+        if (!window.confirm(`Radera modulen "${name}"? Det går inte att ångra.`)) return;
+
+        setError("");
+
+        try {
+            await authApiCall(
+                `/modules/${selectedModuleId}`,
+                accessToken,
+                setAccessToken,
+                { method: "DELETE" }
+            );
+
+            startNewModule();
+            setUpdateTrigger(Date.now());
+            onSaved?.();
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Kunde inte radera modulen");
+        }
+    }
+
     return (
         <div className="flex flex-col md:flex-row gap-6">
             <aside className="w-full md:w-1/3">
@@ -161,7 +183,16 @@ export default function ModuleControl({ onSaved }: ModuleControlProps) {
                         />
                     </label>
 
-                    <div className="flex gap-2 justify-end">
+                    <div className="flex gap-2 justify-end items-center">
+                        {selectedModuleId && (
+                            <button
+                                type="button"
+                                className="text-red-600 text-sm mr-auto hover:underline"
+                                onClick={deleteModule}
+                            >
+                                Radera modul
+                            </button>
+                        )}
                         <Button label="Spara" onClick={saveModule} />
                     </div>
 

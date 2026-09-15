@@ -156,6 +156,27 @@ export default function ActivityControl() {
         }
     }
 
+    async function deleteActivity() {
+        if (!selectedModuleId || !selectedActivityId) return;
+        if (!window.confirm(`Radera aktiviteten "${name}"? Det går inte att ångra.`)) return;
+
+        setError("");
+
+        try {
+            await authApiCall(
+                `/modules/${selectedModuleId}/activities/${selectedActivityId}`,
+                accessToken,
+                setAccessToken,
+                { method: "DELETE" }
+            );
+
+            startNewActivity();
+            setActivityUpdateTrigger(Date.now());
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Kunde inte radera aktiviteten");
+        }
+    }
+
     return (
         <div className="flex flex-col md:flex-row gap-6">
             <aside className="w-full md:w-1/3">
@@ -264,7 +285,16 @@ export default function ActivityControl() {
                             />
                         </label>
 
-                        <div className="flex gap-2 justify-end">
+                        <div className="flex gap-2 justify-end items-center">
+                            {selectedActivityId && (
+                                <button
+                                    type="button"
+                                    className="text-red-600 text-sm mr-auto hover:underline"
+                                    onClick={deleteActivity}
+                                >
+                                    Radera aktivitet
+                                </button>
+                            )}
                             <Button label="Spara" onClick={saveActivity} />
                         </div>
 
