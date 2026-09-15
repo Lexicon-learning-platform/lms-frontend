@@ -38,7 +38,16 @@ const apiCall = async <T, >(endpoint: string, options: RequestInit = {}): Promis
         throw new Error(`${await response.text()}`);
     }
     if (!response.ok && response.status !== 204) {
-        throw new Error(`Ett API-fel uppstod ${response.status}`);
+        let message = `Ett API-fel uppstod ${response.status}`;
+
+        try {
+            const body = await response.json();
+            message = body?.detail ?? body?.title ?? message;
+        } catch {
+            // Response body wasn't JSON (or was empty) - keep the generic message.
+        }
+
+        throw new Error(message);
     }
 
     return response.status === 204 ? null : await response.json();
