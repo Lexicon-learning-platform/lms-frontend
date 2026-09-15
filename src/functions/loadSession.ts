@@ -34,4 +34,5 @@ export async function loadSession(
 
     setUser(userResponse);
     setCourse(courseResponse);
+    return userResponse;
 }

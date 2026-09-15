@@ -27,41 +27,41 @@ function App() {
 
 
     useEffect(() => {
-        async function restoreSession() {
-            try {
+            async function restoreSession() {
+                try {
 
-                const authResponse = await apiCall<AuthResponse>(
-                    "/auth/token",
-                    {
-                        method: "POST"
+                    const authResponse = await apiCall<AuthResponse>(
+                        "/auth/token",
+                        {
+                            method: "POST"
+                        }
+                    );
+
+                    if (!authResponse) {
+                        console.log("3. no auth response");
+                        return;
                     }
-                );
 
-                if (!authResponse) {
-                    console.log("3. no auth response");
-                    return;
+
+                    await loadSession(
+                        authResponse.accessToken,
+                        setAccessToken,
+                        setUser,
+                        setCourse
+                    );
+
+                } catch (error) {
+                    if (error instanceof Error) {
+                        console.log("RESTORE SESSION ERROR:", error.message);
+                    } else {
+                        console.log("RESTORE SESSION ERROR:", error);
+                    }
+
+                    setAccessToken(null);
+                    setUser(null);
+                    setCourse(null);
                 }
-
-
-                await loadSession(
-                    authResponse.accessToken,
-                    setAccessToken,
-                    setUser,
-                    setCourse
-                );
-
-            } catch (error) {
-                if (error instanceof Error) {
-                    console.log("RESTORE SESSION ERROR:", error.message);
-                } else {
-                    console.log("RESTORE SESSION ERROR:", error);
-                }
-
-                setAccessToken(null);
-                setUser(null);
-                setCourse(null);
             }
-        }
 
         restoreSession();
     }, [setAccessToken, setUser, setCourse]);
@@ -87,7 +87,7 @@ function App() {
                         <Route path="/modules" element={<Modules />} />
                         <Route path="/schedule" element={<Schedule />} />
                         <Route path="/submissions" element={<Submissions />} />
-                        {user.role=="Admin" ? (<Route path="/admin" element={<Admin />} />) : (<></>)}
+                        {user?.role?.toLowerCase() === "admin" ? (<Route path="/admin" element={<Admin />} />) : (<></>)}
                     </Routes>
                 ) : (
                     <Routes>
