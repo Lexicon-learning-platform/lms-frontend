@@ -5,8 +5,15 @@ import { useAuth } from "../context/auth/AuthContext.ts";
 import { authApiCall } from "../functions/authApiCall.ts";
 import type { Course } from "../models/course.ts";
 import type { CourseSummary } from "../models/courseSummary.ts";
+import type { Module } from "../models/module.ts";
 
-export default function CourseControl() {
+interface CourseControlProps {
+    // Bumped by ModuleControl whenever a module is created/edited, so the
+    // attach-checklist below picks up new/renamed modules without a reload.
+    moduleRefreshSignal?: number;
+}
+
+export default function CourseControl({ moduleRefreshSignal = 0 }: CourseControlProps) {
     const { accessToken, setAccessToken } = useAuth();
 
     const [updateTrigger, setUpdateTrigger] = useState(0);
@@ -18,7 +25,7 @@ export default function CourseControl() {
     const [startDate, setStartDate] = useState("");
     const [duration, setDuration] = useState(1);
     const [moduleIds, setModuleIds] = useState<string[]>([]);
-    const [attachedModuleNames, setAttachedModuleNames] = useState<string[]>([]);
+    const [allModules, setAllModules] = useState<Module[]>([]);
 
     const [error, setError] = useState("");
 
@@ -28,7 +35,6 @@ export default function CourseControl() {
         setStartDate("");
         setDuration(1);
         setModuleIds([]);
-        setAttachedModuleNames([]);
     }
 
     useEffect(() => {
@@ -61,6 +67,33 @@ export default function CourseControl() {
     useEffect(() => {
         let isMounted = true;
 
+        async function fetchModules() {
+            try {
+                const data = await authApiCall<Module[]>(
+                    "/modules?pageSize=100",
+                    accessToken,
+                    setAccessToken,
+                    { method: "GET" }
+                );
+
+                if (isMounted) setAllModules(data ?? []);
+            } catch (err) {
+                if (isMounted) {
+                    setError(err instanceof Error ? err.message : "Kunde inte hämta moduler");
+                }
+            }
+        }
+
+        fetchModules();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [moduleRefreshSignal, accessToken, setAccessToken]);
+
+    useEffect(() => {
+        let isMounted = true;
+
         async function fetchCourse() {
             if (!selectedCourseId) {
                 resetForm();
@@ -82,7 +115,6 @@ export default function CourseControl() {
                 setStartDate(data.startDate);
                 setDuration(data.duration);
                 setModuleIds(data.modules.map(m => m.id));
-                setAttachedModuleNames(data.modules.map(m => m.name ?? "(namnlös modul)"));
             } catch (err) {
                 if (isMounted) {
                     setError(err instanceof Error ? err.message : "Kunde inte hämta kursen");
@@ -96,6 +128,14 @@ export default function CourseControl() {
             isMounted = false;
         };
     }, [selectedCourseId, accessToken, setAccessToken]);
+
+    function toggleModule(moduleId: string) {
+        setModuleIds(current =>
+            current.includes(moduleId)
+                ? current.filter(id => id !== moduleId)
+                : [...current, moduleId]
+        );
+    }
 
     function startNewCourse() {
         setSelectedCourseId("");
@@ -205,14 +245,28 @@ export default function CourseControl() {
                         />
                     </label>
 
-                    {selectedCourseId && (
-                        <p className="text-sm text-slate-600">
-                            <span className="font-semibold">Moduler i kursen: </span>
-                            {attachedModuleNames.length > 0
-                                ? attachedModuleNames.join(", ")
-                                : "Inga moduler ännu"}
-                        </p>
-                    )}
+                    <div className="flex flex-col gap-1 text-sm">
+                        <span className="font-semibold">Moduler i kursen</span>
+
+                        {allModules.length === 0 ? (
+                            <span className="text-slate-500">
+                                Inga moduler skapade ännu - skapa en nedan under "Moduler".
+                            </span>
+                        ) : (
+                            <div className="flex flex-col gap-1 max-h-48 overflow-y-auto bg-slate-100 border border-slate-700 rounded-lg p-2">
+                                {allModules.map(m => (
+                                    <label key={m.id} className="flex items-center gap-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={moduleIds.includes(m.id)}
+                                            onChange={() => toggleModule(m.id)}
+                                        />
+                                        {m.name}
+                                    </label>
+                                ))}
+                            </div>
+                        )}
+                    </div>
 
                     <div className="flex gap-2 justify-end">
                         <Button label="Spara" onClick={saveCourse} />
