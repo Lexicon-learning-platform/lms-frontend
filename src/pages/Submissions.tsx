@@ -1,7 +1,5 @@
 
 import type { Submissions } from '../models/submissions.ts';
-import {useCurrentUser} from "../context/currentUser/currentUserContext.ts";
-import {useCurrentCourse} from "../context/course/CourseContext.ts";
 import { useEffect, useState } from 'react';
 import { authApiCall } from '../functions/authApiCall.ts';
 import { useAuth } from "../context/auth/AuthContext.ts";
