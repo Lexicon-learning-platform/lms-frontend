@@ -49,8 +49,8 @@ fetchSubmissions()
 
     return (
         <>
-            <h1>Inlämningar</h1>
-            <h2>Dina aktuella inlämningsuppgifter</h2>
+            <h1 className="text-3xl font-bold text-slate-900 mb-2">Inlämningar</h1>
+            <p className="text-slate-600">Dina aktuella inlämningsuppgifter</p>
             {assignments.map(assignment =>{
                 (<>
 
