@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { authApiCall } from '../functions/authApiCall.ts';
 import { useAuth } from "../context/auth/AuthContext.ts";
 import ErrorMessage from "../components/Error.tsx";
-import type { ActivitySimple } from '../models/ActivitySimple.ts';
+import type { ActivitySimple } from '../models/activitySimple.ts';
 import type { TurnIn } from '../models/turnIn.ts';
 import Card from '../components/Card.tsx';
 
