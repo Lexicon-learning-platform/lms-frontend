@@ -1,4 +1,7 @@
+import type { ActivitySimple } from "./ActivitySimple"
+import type { TurnIn } from "./turnIn"
+
 export interface Submissions {
-    completedSubs: string[]
-    unCompletedSubs: string[]
+    assignments: ActivitySimple[]
+    turnins: TurnIn[]
 }
