@@ -1,77 +1,74 @@
-import {useState, useEffect} from 'react'
-import type {ApplicationUser} from '../models/applicationUser.ts'
-
-import {authApiCall} from '../functions/authApiCall.ts'
+import { useState, useEffect } from "react";
+import { authApiCall } from "../functions/authApiCall.ts";
 import { useAuth } from "../context/auth/AuthContext.ts";
-import ErrorMessage from './Error.tsx';
+import ErrorMessage from "./Error.tsx";
+import type { CourseMember } from "../models/courseMember.ts";
 
-const Classmates = () => {
+type Props = {
+    courseId: string;
+};
 
-const { accessToken, setAccessToken } = useAuth();
-   const [users, setUsers] = useState<ApplicationUser[]>([])
-    const [error, setError] = useState<string>('');
+const Classmates = ({ courseId }: Props) => {
 
+    const { accessToken, setAccessToken } = useAuth();
+    const [users, setUsers] = useState<CourseMember[]>([]);
+    const [error, setError] = useState("");
 
-useEffect(() => {
-    let isMounted = true; 
-    const fetchAllClassmates = async () => {
-    try {
-        const data = await authApiCall<ApplicationUser[]>(`/courses/getclassmates`,
-            accessToken,
-            setAccessToken,
-         { method: 'GET' });
-        if (isMounted && data) {
-          setUsers(data);
-        }
-    }catch (err: unknown) {
-        if (isMounted) {
-          if (err instanceof Error) {
-            setError(err.message);
-          } else {
-            setError('Ett okänt fel uppstod vid hämtning av användare.');
-          }
-        }
-    } finally {
-      isMounted = false;
-    }
-    }
+    useEffect(() => {
+        const fetchCourseMembers = async () => {
+            try {
+                setError("");
 
-fetchAllClassmates()
-}, []);
+                const data = await authApiCall<CourseMember[]>(
+                    `/courses/${courseId}/members`,
+                    accessToken,
+                    setAccessToken,
+                    { method: "GET" }
+                );
 
+                console.log("members for", courseId, data);
+                setUsers(data ?? []);
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("Ett okänt fel uppstod vid hämtning av kursdeltagare.");
+                }
+            }
+        };
 
-    return (<>
+        fetchCourseMembers();
+    }, [courseId]);
 
+    return (
+        <>
             <span>Kursdeltagare:</span>
-            
-              <table className="mx-auto table table-fixed table-hover">
-            <thead className='text-left'>
+
+            <table className="mx-auto table table-fixed table-hover">
+                <thead className="text-left">
                 <tr>
-                    <th className='w-1/4'>Namn</th>
-                    <th className='w-1/4'>Användarnamn</th>
-                    <th className='w-1/4'>Roll</th>
-
+                    <th className="w-1/4">Namn</th>
+                    <th className="w-1/4">Användarnamn</th>
+                    <th className="w-1/4">Roll</th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
-                {users?.map(user => (
-                
-               
-                <tr className="hover:bg-slate-200" key={user.id}>
-                    <td className='w-1/4'>{user.givenName} {user.lastName}</td>
-                    <td className='w-1/4'>{user.userName}</td>
-                    <td className='w-1/4'>{user.role}</td>
-                </tr>
-                
+                <tbody>
+                {users.map(user => (
+                    <tr className="hover:bg-slate-200" key={user.id}>
+                        <td className="w-1/4">
+                            {user.givenName} {user.lastName}
+                        </td>
+                        <td className="w-1/4">{user.userName}</td>
+                        <td className="w-1/4">{user.role}</td>
+                    </tr>
                 ))}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-    <ErrorMessage error={error} />
+            <ErrorMessage error={error} />
+        </>
+    );
+};
 
-    
-    </>)
-}
-
-export default Classmates
+export default Classmates;
