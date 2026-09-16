@@ -49,25 +49,24 @@ fetchSubmissions()
 
     return (
         <>
-<h1>Inlämningar</h1>
-<h2>Dina aktuella inlämningsuppgifter</h2>
-{assignments.map(assignment =>{
-(<>
+            <h1>Inlämningar</h1>
+            <h2>Dina aktuella inlämningsuppgifter</h2>
+            {assignments.map(assignment =>{
+                (<>
 
-{turnins.map(turnin => {
-    if(turnin.activityId === assignment.id) {
-        <Card>
-            <h2>{turnin.name}</h2>
-            <h2>{assignment.name}</h2>
-            <h3>{turnin.description}</h3>
-        </Card>
-    }
-})}
+                    {turnins.map(turnin => {
+                        if(turnin.activityId === assignment.id) {
+                            <Card>
+                                <h2>{turnin.name}</h2>
+                                <h2>{assignment.name}</h2>
+                                <h3>{turnin.description}</h3>
+                            </Card>
+                        }
+                    })}
 
-</>)
-}
-)}
-               <ErrorMessage error={error} />
+                </>)
+            })}
+            <ErrorMessage error={error} />
         </>
     );
 }
