@@ -6,7 +6,7 @@ export default function Home() {
     const { course } = useCurrentCourse();
 
     if (!course) {
-        return <p>Ingen kurs hittades.</p>;
+        return <p>Ingen kurs vald.</p>;
     }
 
     return (
