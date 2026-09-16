@@ -10,10 +10,10 @@ export default function Admin() {
             <section className="w-full">
                 <div className="mx-auto px-12 py-24">
                     <div className="max-w-3xl">
-                        <h1 className="text-5xl font-bold text-slate-900 mb-6">
+                        <h1 className="text-3xl font-bold text-slate-900 mb-2">
                             Administrativ Dashboard
                         </h1>
-                        <p className="text-xl text-slate-600 leading-relaxed">
+                        <p className="text-slate-600 leading-relaxed">
                             Gör administrativa ändringar här.
                         </p>
                     </div>
